@@ -69,18 +69,6 @@
         ];
       };
 
-      # macMini configuration
-      # macMini = darwin.lib.darwinSystem {
-      #   system = "x86_64-darwin";
-      #   specialArgs = { inherit inputs; };
-      #   modules = [
-      #     ./hosts/macMini/configuration.nix
-      #     ./hosts/macMini/hardware-configuration.nix
-      #     ./darwinModules/module1.nix
-      #     ./darwinModules/module2.nix
-      #     ./darwinModules/subdir/module3.nix
-      #   ];
-      # };
     };
   };
 }

@@ -5,7 +5,7 @@
     vim.enable = lib.mkEnableOption "Enable LazyVim, a Neovim configuration";
   };
 
-  config = lib.mkIf config.lazyVim.enable {
+  config = lib.mkIf config.vim.enable {
     # Install neovim
     environment.systemPackages = with pkgs; [
       # Neovim and dependencies
