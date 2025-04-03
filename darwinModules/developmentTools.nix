@@ -14,6 +14,7 @@
       python313
       temurin-jre-bin-8
       virtualenv
+      docker_26
       # pyenv
     ];
 
