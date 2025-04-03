@@ -28,7 +28,8 @@
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
-          ./darwinModules/vim.nix
+          ./darwinModules/vimTools.nix
+          # ./darwinModules/vimTools.nix
 
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
@@ -57,7 +58,7 @@
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
-          ./darwinModules/vim.nix
+          ./darwinModules/vimTools.nix
 
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
