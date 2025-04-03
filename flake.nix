@@ -28,14 +28,39 @@
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
-          # ./darwinModules/module2.nix
-          # ./darwinModules/subdir/module3.nix
 
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
               enable = true;
               # enableRosetta = true;
               # User owning the Homebrew prefix
+              user = "admin";
+            };
+          }
+        ];
+      };
+
+      # M4 Pro MacBook configuration
+      m4Pro = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin"; # Apple Silicon architecture
+        specialArgs = { inherit self inputs; };
+        modules = [
+          mac-app-util.darwinModules.default
+          ./hosts/m4Pro/hardware-configuration.nix
+          ./hosts/m4Pro/configuration.nix
+          ./hosts/m4Pro/darwin-configuration.nix
+          ./darwinModules/systemDefaults.nix
+          ./darwinModules/cloudTools.nix
+          ./darwinModules/desktopApps.nix
+          ./darwinModules/developmentTools.nix
+          ./darwinModules/terminalDefaults.nix
+          ./darwinModules/fontPackage.nix
+          ./darwinModules/homeBrew.nix
+
+          nix-homebrew.darwinModules.nix-homebrew {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = true; # Enable Rosetta for running x86 apps on ARM
               user = "admin";
             };
           }
