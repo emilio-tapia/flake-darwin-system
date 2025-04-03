@@ -20,6 +20,8 @@
     #   keepassxc
       # keepass
       zoom-us
+      xld
+      vscode
     #   teams
     ];
   };
