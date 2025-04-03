@@ -2,7 +2,7 @@
 
 {
   options = {
-    lazyVim.enable = lib.mkEnableOption "Enable LazyVim, a Neovim configuration";
+    vim.enable = lib.mkEnableOption "Enable LazyVim, a Neovim configuration";
   };
 
   config = lib.mkIf config.lazyVim.enable {

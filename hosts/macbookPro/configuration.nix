@@ -13,7 +13,7 @@
   fontPackage.enable = true;
   terminalDefaults.enable = true;
   homeBrew.enable = true;
-  lazyVim.enable = true;
+  vim.enable = true;
 
 
   # Enable specific modules
