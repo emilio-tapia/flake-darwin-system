@@ -32,6 +32,9 @@
 
       masApps = {
         "EZVIZ for Mac" = 1594552558;
+        "SnippetsLab" = 1006087419;
+        "WhatsApp Messenger" = 310633997;
+        "Mini Calendar" = 1088779979;
       };
     };
   };
