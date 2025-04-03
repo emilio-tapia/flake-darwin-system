@@ -9,7 +9,6 @@
     environment.systemPackages = with pkgs; [
       htop
       ranger
-      neovim
       tmux
       alacritty
     ];
