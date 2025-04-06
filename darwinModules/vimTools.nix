@@ -19,27 +19,36 @@
       lazygit
     ];
 
-    # Create the LazyVim configuration
-    # system.activationScripts.postActivation.text = ''
-    #   # Create nvim config directory if it doesn't exist
-    #   mkdir -p ~/.config/nvim
+    # Create the LazyVim configuration  
+      system.activationScripts.postActivation.text = ''
+      # Get the actual logged-in user (works with sudo)
+      USER="$(logname)"
+      USER_HOME="/Users/$USER"
+      NVIM_CONFIG="$USER_HOME/.config/nvim"
 
-    #   # Only clone if the directory is empty or doesn't exist
-    #   if [ ! -f ~/.config/nvim/init.lua ]; then
-    #     echo "Setting up LazyVim..."
-    #     # Clear the directory first if it exists but is empty
-    #     [ -d ~/.config/nvim ] && find ~/.config/nvim -mindepth 1 -maxdepth 1 | read -q || rm -rf ~/.config/nvim
+      echo "Detected user: $USER"
+      echo "Config path: $NVIM_CONFIG"
+
+      # Create directory as the real user
+      sudo -u "$USER" mkdir -p "$NVIM_CONFIG"
+
+      # Check for existing config
+      if [ ! -f "$NVIM_CONFIG/init.lua" ]; then
+        echo "Setting up LazyVim for $USER..."
         
-    #     # Clone the LazyVim starter configuration
-    #     git clone https://github.com/LazyVim/starter ~/.config/nvim
+        # Clone as the real user
+        sudo -u "$USER" git clone https://github.com/LazyVim/starter "$NVIM_CONFIG" || {
+          echo "Failed to clone LazyVim starter"
+          exit 1
+        }
+
+        # Remove .git directory
+        # sudo -u "$USER" rm -rf "$NVIM_CONFIG/.git"
         
-    #     # Remove the .git directory to avoid conflicts
-    #     rm -rf ~/.config/nvim/.git
-        
-    #     echo "LazyVim setup complete!"
-    #   else
-    #     echo "LazyVim configuration already exists, skipping setup."
-    #   fi
-    # '';
+        echo "LazyVim setup complete!"
+      else
+        echo "LazyVim configuration already exists for $USER, skipping setup."
+      fi
+    '';
   };
 } 

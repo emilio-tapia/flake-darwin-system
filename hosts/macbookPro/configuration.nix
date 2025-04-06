@@ -13,7 +13,6 @@
   fontPackage.enable = true;
   terminalDefaults.enable = true;
   homeBrew.enable = true;
-  # vimTools.enable = true;
 
 
   # Enable specific modules
@@ -21,5 +20,4 @@
   desktopApps.enable = true;
   developmentTools.enable = true;
   # module2.enable = false;
-  # module3.enable = true;
 }

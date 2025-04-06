@@ -17,6 +17,10 @@
         system = "x86_64-darwin"; # Intel chip architecture
         specialArgs = { inherit self inputs; };
         modules = [
+          # Add Home Manager module
+          home-manager.darwinModules.home-manager
+
+          # Add Mac App Util module
           mac-app-util.darwinModules.default
           ./hosts/macbookPro/hardware-configuration.nix
           ./hosts/macbookPro/configuration.nix
@@ -28,8 +32,18 @@
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
-          ./darwinModules/vimTools.nix
           # ./darwinModules/vimTools.nix
+
+
+          # Home Manager configuration
+          home-manager.darwinModules.home-manager {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.admin = import ./hosts/macbookPro/home_manager/admin.nix;
+            };
+          }
+
 
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
@@ -58,7 +72,16 @@
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
-          ./darwinModules/vimTools.nix
+          # ./darwinModules/vimTools.nix
+
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.admin = import ./hosts/m4Pro/home_manager/admin.nix;  # Needs matching structure
+            };
+          }
 
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
