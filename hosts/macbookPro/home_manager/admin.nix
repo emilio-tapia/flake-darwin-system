@@ -8,7 +8,7 @@
   # Basic Home Manager configuration
   home = {
     username = "admin";
-    homeDirectory = "/Users/admin";
+    # homeDirectory = "/Users/admin"; # Commented out - let HM infer
     stateVersion = "23.11";
   };
   
@@ -17,6 +17,7 @@
         enable = true;
         oh-my-zsh.enable = true;
     };
-    lazyvim.enable = true; 
   };
+  
+  lazyvim.enable = true;
 }
