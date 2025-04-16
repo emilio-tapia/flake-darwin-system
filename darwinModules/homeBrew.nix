@@ -16,6 +16,8 @@
 
       casks = [
         "iina"
+        "httpie"
+        "bruno"
       ];
 
       caskArgs = {
@@ -28,6 +30,7 @@
         "mas"
         # "pnpm"
         "tree"
+        # "postgresql@16"
       ];
 
       masApps = {

@@ -22,6 +22,7 @@
       atuin #shell history
       yazi #terminal file manager
       btop #htop
+      xh #fast tool for sending HTTP requests
     ];
 
 
