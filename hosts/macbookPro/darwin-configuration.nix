@@ -13,5 +13,11 @@
     # Either this one, which blanket allows all unfree packages
     nixpkgs.config.allowUnfree = true;
 
+    
+    users.users.admin = {
+    home = "/Users/admin";
+    shell = "/bin/zsh";  # Or your preferred shell
+  };
+
   };
 }

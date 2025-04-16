@@ -11,10 +11,22 @@
       ranger
       tmux
       alacritty
+      cheat
+      pdfcpu #pdf tools
+      tokei #count code statistics
+      mprocs #TUI tool to run multiple commands in parallel
+      rnr #batch rename files and directories
+      kondo #clean unneed files
+      jless #cli json viewer
+      htmlq #extract html part based on queries
+      atuin #shell history
+      yazi #terminal file manager
+      btop #htop
     ];
 
 
     # Optional program-specific configurations
     # programs.tmux.enable = true;
+    programs.zsh.enable = true;
   };
 }

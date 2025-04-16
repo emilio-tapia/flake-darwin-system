@@ -1,6 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
+
+  # Create /etc/bashrc that loads the nix-darwin environment.
+  programs.zsh.enable = true;
+
+  # Auto upgrade nix package and the daemon service.
+  services.nix-daemon.enable = true;
+
   # macbookPro-specific configuration
   networking.hostName = "macbookPro";
 

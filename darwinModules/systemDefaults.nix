@@ -8,6 +8,11 @@
   config = lib.mkIf config.systemDefaults.enable {
 
 
+    environment.systemPackages = with pkgs; [
+      nix-prefetch-github
+    ];
+
+
     # Enable alternative shell support in nix-darwin
     programs.zsh.enable = true; # Default shell on macOS
 
@@ -21,6 +26,13 @@
       screencapture.location = "~/Pictures/screenshots";
       screensaver.askForPasswordDelay = 10;
     };
+
+    # Keyboard
+    system.keyboard.enableKeyMapping = true;
+    system.keyboard.remapCapsLockToEscape = true;
+
+    # Add ability to used TouchID for sudo authentication
+    # security.pam.enableSudoTouchIdAuth = true;
 
   };
 }

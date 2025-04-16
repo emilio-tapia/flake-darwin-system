@@ -6,8 +6,14 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager"; # Reference to home-manager for user-level configurations
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     mac-app-util.url = "github:hraban/mac-app-util";
+        # LazyVim starter template
+    lazyvim = {
+      url = "github:LazyVim/starter";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, mac-app-util, ... }@inputs: {
@@ -15,10 +21,13 @@
       # macbookPro configuration
       macbookPro = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin"; # Intel chip architecture
-        specialArgs = { inherit self inputs; };
+        specialArgs = { 
+          inherit self inputs; 
+          nvimModules = "./home_managerModules/lazyvim.nix";
+        };
         modules = [
           # Add Home Manager module
-          home-manager.darwinModules.home-manager
+
 
           # Add Mac App Util module
           mac-app-util.darwinModules.default
@@ -35,12 +44,17 @@
           # ./darwinModules/vimTools.nix
 
 
-          # Home Manager configuration
+          # Home Manager configuration (This is the correct one)
           home-manager.darwinModules.home-manager {
             home-manager = {
+              backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
               users.admin = import ./hosts/macbookPro/home_manager/admin.nix;
+              extraSpecialArgs = { 
+                inherit inputs; 
+                modulesPath = toString ./home_managerModules;
+              };
             };
           }
 
@@ -59,7 +73,10 @@
       # M4 Pro MacBook configuration
       m4Pro = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin"; # Apple Silicon architecture
-        specialArgs = { inherit self inputs; };
+        specialArgs = { 
+          inherit self inputs;
+          modulesPath = toString ./home_managerModules;
+        };
         modules = [
           mac-app-util.darwinModules.default
           ./hosts/m4Pro/hardware-configuration.nix
@@ -74,12 +91,15 @@
           ./darwinModules/homeBrew.nix
           # ./darwinModules/vimTools.nix
 
-          home-manager.darwinModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               users.admin = import ./hosts/m4Pro/home_manager/admin.nix;  # Needs matching structure
+              extraSpecialArgs = { 
+                inherit inputs;
+                modulesPath = toString ./home_managerModules;
+              };
             };
           }
 

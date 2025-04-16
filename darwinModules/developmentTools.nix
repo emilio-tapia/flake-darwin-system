@@ -12,6 +12,7 @@
       nodejs
       pnpm
       python313
+      python3Packages.pip
       temurin-jre-bin-8
       virtualenv
       docker_26
