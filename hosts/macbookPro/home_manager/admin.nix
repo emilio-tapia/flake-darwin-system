@@ -20,6 +20,18 @@
         oh-my-zsh.enable = true;
         oh-my-zsh.plugins = [ "git" "docker" ];
     };
+
+    atuin = {
+      enable = true;
+      enableFishIntegration = true;
+      settings = {
+        auto_sync = true;
+        sync_address = "https://api.atuin.sh";
+        style = "auto";
+        workspaces = true;
+      };
+    };
+
       # Htop
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
     htop = {

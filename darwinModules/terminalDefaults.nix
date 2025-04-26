@@ -23,11 +23,19 @@
       yazi #terminal file manager
       btop #htop
       xh #fast tool for sending HTTP requests
+      hurl #performs HTTP requests defined in plain text format
+      graphviz #Graph visualization tools
+      plantuml #Draw UML diagrams using human readable text description
+
     ];
 
 
     # Optional program-specific configurations
     # programs.tmux.enable = true;
-    programs.zsh.enable = true;
+    programs = {
+      zsh ={
+        enable = true;
+      };
+    };
   };
 }
