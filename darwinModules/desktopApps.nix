@@ -11,18 +11,22 @@
     #   firefox         # Web browser
     #   thunderbird     # Email client
       dbeaver-bin         # Universal database tool
-    #   vscode          # Visual Studio Code
-      brave
+      # brave
       # slack
       audacity
       # bitwarden-desktop
     #   bitwarden-cli
     #   keepassxc
       # keepass
-      zoom-us
+      # zoom-us
       xld
       vscode
-    #   teams
+      #   teams
+      # archi
+      # camunda-modeler # didn't work intel
+      # android-studio
+      # appcleaner
+      # cool-retro-term # didn't work intel
     ];
   };
 }

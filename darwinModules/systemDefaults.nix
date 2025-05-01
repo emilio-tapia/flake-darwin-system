@@ -12,10 +12,6 @@
       nix-prefetch-github
     ];
 
-
-    # Enable alternative shell support in nix-darwin
-    programs.zsh.enable = true; # Default shell on macOS
-
     system.defaults = {
       dock.autohide = false;
       dock.mru-spaces = false;

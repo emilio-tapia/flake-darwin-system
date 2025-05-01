@@ -18,6 +18,21 @@
         "iina"
         "httpie"
         "bruno"
+        # "dbschema" # app runtime error in intel
+        # "cursor"
+        # "google-chrome"
+        # "figma"
+        # "sync"
+        # "google-drive"
+        "omnidisksweeper"
+        "transmission"
+        "android-file-transfer"
+        # "focusrite-control"
+        "rightfont"
+        # "sf-symbols"
+        "sourcetree"
+        "camunda-modeler"
+        "cool-retro-term"
       ];
 
       caskArgs = {
