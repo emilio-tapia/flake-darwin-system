@@ -316,7 +316,7 @@
             yellow =  "#ffe96c";       # Sunbeam yellow
             blue =    "#0370D6";       # Shallow water blue
             magenta = "#d18aff";       # Bioluminescent purple
-            cyan =    "#149784";       # Tropical cyan
+            cyan =    "#0B9CB9";       # Tropical cyan
             white =   "#c7d0d7";       # Foam white
           };
 

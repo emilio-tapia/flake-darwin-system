@@ -53,7 +53,7 @@
               backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.admin = import ./hosts/macbookPro/home_manager/admin.nix;
+              users.admin = import ./home_manager/admin.nix;
               extraSpecialArgs = { 
                 inherit inputs; 
                 modulesPath = toString ./home_managerModules;
@@ -105,7 +105,7 @@
               backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.admin = import ./hosts/m4Pro/home_manager/admin.nix;
+              users.admin = import ./home_manager/admin.nix;
               extraSpecialArgs = { 
                 inherit inputs;
                 modulesPath = toString ./home_managerModules;
