@@ -15,7 +15,7 @@
 
     
     users.users.emilio = {
-    home = "/Users/emiio";
+    home = "/Users/emilio";
     shell = "/bin/zsh";  # Or your preferred shell
   };
 
