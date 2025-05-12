@@ -110,7 +110,7 @@
               users.emilio = import ./home_manager/emilio_m4Pro.nix;
               extraSpecialArgs = { 
                 inherit inputs;
-                modulesPath = toString ./home_managerModules;
+                modulesPath = ./home_managerModules;
               };
             };
           }

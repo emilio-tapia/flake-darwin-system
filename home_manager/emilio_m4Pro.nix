@@ -4,8 +4,8 @@
 
   # Basic Home Manager configuration
   home = {
-    username = lib.mkDefault "emilio";
-    homeDirectory = lib.mkDefault "/Users/emilio"; 
+    username = "emilio";
+    homeDirectory = lib.mkDefault "/Users/emilio";  
     stateVersion = "23.11";
 
     packages = with pkgs; [
