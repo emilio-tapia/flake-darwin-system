@@ -107,7 +107,7 @@
               backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.admin = import ./home_manager/admin.nix;
+              users.emilio = import ./home_manager/admin.nix;
               extraSpecialArgs = { 
                 inherit inputs;
                 modulesPath = toString ./home_managerModules;
@@ -119,7 +119,7 @@
             nix-homebrew = {
               enable = true;
               enableRosetta = true; # Enable Rosetta for running x86 apps on ARM
-              user = "admin";
+              user = "emilio";
             };
           }
         ];
