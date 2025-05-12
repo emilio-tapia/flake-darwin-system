@@ -1,10 +1,11 @@
 { inputs, config, pkgs, lib, nvimModules, ... }:
 
 {
-  
+
   # Basic Home Manager configuration
   home = {
     username = "emilio";
+    homeDirectory = "/Users/emilio"; 
     stateVersion = "23.11";
 
     packages = with pkgs; [
