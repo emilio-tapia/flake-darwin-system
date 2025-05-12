@@ -8,6 +8,7 @@
     home-manager.url = "github:nix-community/home-manager"; # Reference to home-manager for user-level configurations
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    devenv.url = "github:cachix/devenv/latest";
     mac-app-util.url = "github:hraban/mac-app-util";
         # LazyVim starter template
     lazyvim = {
@@ -23,17 +24,19 @@
         system = "x86_64-darwin"; # Intel chip architecture
         specialArgs = { 
           inherit self inputs; 
-          nvimModules = "./home_managerModules/lazyvim.nix";
+          # nvimModules = "./home_managerModules/lazyvim.nix";
         };
         modules = [
-          # Add Home Manager module
-
-
-          # Add Mac App Util module
+          # Properly structure Home Manager integration
+          home-manager.darwinModules.home-manager
           mac-app-util.darwinModules.default
+
+          # Host-specific configurations
           ./hosts/macbookPro/hardware-configuration.nix
           ./hosts/macbookPro/configuration.nix
           ./hosts/macbookPro/darwin-configuration.nix
+
+          # Shared Darwin modules
           ./darwinModules/systemDefaults.nix
           ./darwinModules/cloudTools.nix
           ./darwinModules/desktopApps.nix
@@ -44,8 +47,8 @@
           # ./darwinModules/vimTools.nix
 
 
-          # Home Manager configuration (This is the correct one)
-          home-manager.darwinModules.home-manager {
+          # Home Manager configuration
+           {
             home-manager = {
               backupFileExtension = "backup";
               useGlobalPkgs = true;
@@ -62,7 +65,6 @@
           nix-homebrew.darwinModules.nix-homebrew {
             nix-homebrew = {
               enable = true;
-              # enableRosetta = true;
               # User owning the Homebrew prefix
               user = "admin";
             };
@@ -75,13 +77,18 @@
         system = "aarch64-darwin"; # Apple Silicon architecture
         specialArgs = { 
           inherit self inputs;
-          modulesPath = toString ./home_managerModules;
         };
         modules = [
+          # Properly structure Home Manager integration
+          home-manager.darwinModules.home-manager
           mac-app-util.darwinModules.default
+
+          # Host-specific configurations
           ./hosts/m4Pro/hardware-configuration.nix
           ./hosts/m4Pro/configuration.nix
           ./hosts/m4Pro/darwin-configuration.nix
+
+          # Shared Darwin modules
           ./darwinModules/systemDefaults.nix
           ./darwinModules/cloudTools.nix
           ./darwinModules/desktopApps.nix
@@ -91,11 +98,14 @@
           ./darwinModules/homeBrew.nix
           # ./darwinModules/vimTools.nix
 
+
+          # Home Manager configuration
           {
             home-manager = {
+              backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.admin = import ./hosts/m4Pro/home_manager/admin.nix;  # Needs matching structure
+              users.admin = import ./hosts/m4Pro/home_manager/admin.nix;
               extraSpecialArgs = { 
                 inherit inputs;
                 modulesPath = toString ./home_managerModules;
