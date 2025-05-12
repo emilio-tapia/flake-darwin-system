@@ -21,6 +21,7 @@
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
       # noto-fonts-emoji
+      meslo-lgs-nf 
 
       # Google Fonts (examples)
       (pkgs.google-fonts.override { fonts = [ "Roboto" "Open Sans" "Lato" "Montserrat" "Poppins" ]; })

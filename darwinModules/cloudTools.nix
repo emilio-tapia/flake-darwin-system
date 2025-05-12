@@ -9,9 +9,5 @@
     environment.systemPackages = with pkgs; [
         awscli2
     ];
-
-
-    # Optional program-specific configurations
-    # programs.tmux.enable = true;
   };
 }

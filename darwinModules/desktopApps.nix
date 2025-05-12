@@ -2,7 +2,7 @@
 
 {
   options = {
-    desktopApps.enable = lib.mkEnableOption "Enable installation of common desktop applications like VLC, Firefox, Thunderbird, DBeaver, VS Code, and more.";
+    desktopApps.enable = lib.mkEnableOption "Enable installation of common desktop applications";
   };
 
   config = lib.mkIf config.desktopApps.enable {
@@ -10,7 +10,7 @@
       vlc-bin             # Media player
     #   firefox         # Web browser
     #   thunderbird     # Email client
-      dbeaver-bin         # Universal database tool
+      dbeaver-bin         # Universal database tool _ version 24.3
       # brave
       # slack
       audacity

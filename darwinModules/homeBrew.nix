@@ -33,6 +33,7 @@
         "sourcetree"
         "camunda-modeler"
         "cool-retro-term"
+        # "dbeaver-community"
       ];
 
       caskArgs = {
@@ -46,6 +47,7 @@
         # "pnpm"
         "tree"
         # "postgresql@16"
+        # "fzf" #installed in home-manager
       ];
 
       masApps = {
