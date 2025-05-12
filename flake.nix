@@ -54,7 +54,7 @@
               backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.admin = import ./home_manager/admin.nix;
+              users.admin = import ./home_manager/admin_macbookPro.nix;
               extraSpecialArgs = { 
                 inherit inputs; 
                 modulesPath = toString ./home_managerModules;
@@ -107,7 +107,7 @@
               backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.emilio = import ./home_manager/admin.nix;
+              users.emilio = import ./home_manager/emilio_m4Pro.nix;
               extraSpecialArgs = { 
                 inherit inputs;
                 modulesPath = toString ./home_managerModules;
