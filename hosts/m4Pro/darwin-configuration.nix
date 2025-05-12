@@ -14,8 +14,8 @@
     nixpkgs.config.allowUnfree = true;
 
     
-    users.users.admin = {
-    home = "/Users/admin";
+    users.users.emilio = {
+    home = "/Users/emiio";
     shell = "/bin/zsh";  # Or your preferred shell
   };
 
