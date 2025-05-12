@@ -24,9 +24,8 @@
       zsh-powerlevel10k
     ];
 
-    file.".p10k.zsh".source = ./config/p10k/.p10k.zsh;
-    # file.".p10k.zsh".text = builtins.readFile ./p10k.zsh;
-    # file.".p10k.zsh".source = ../../config/p10k/.p10k.zsh;
+    file.".p10k.zsh".source = ./config/p10k/.p10k.zsh; #Copies the file at that path into ~/.p10k.zsh
+    # file.".p10k.zsh".text = builtins.readFile ./config/p10k/.p10k.zsh; #Reads the contents of ./p10k.zsh and writes them into ~/.p10k.zsh
 
 
       
@@ -63,7 +62,6 @@
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" "docker" "z" ];
-        theme = "powerlevel10k/powerlevel10k";
         custom = "$HOME/.config/zsh/omz-custom";
         extraConfig = ''
           zstyle ':completion:*' completer _expand _complete _ignored _approximate _expand_alias
@@ -307,18 +305,18 @@
 
         colors = {
           primary = {
-            background = "#0a1a2f";    # Deep ocean blue
-            foreground = "#c0e0ff";    # Light sky blue
+            background = "#0E1621";    # Deep ocean blue
+            foreground = "#D1E5F9";    # Light sky blue
           };
 
           normal = {
             black =   "#002635";       # Abyssal dark
             red =     "#ff5e5e";       # Coral red
-            green =   "#6cffa8";       # Sea foam green
+            green =   "#138A43";       # Sea foam green
             yellow =  "#ffe96c";       # Sunbeam yellow
-            blue =    "#5ec8ff";       # Shallow water blue
+            blue =    "#0370D6";       # Shallow water blue
             magenta = "#d18aff";       # Bioluminescent purple
-            cyan =    "#5effe8";       # Tropical cyan
+            cyan =    "#149784";       # Tropical cyan
             white =   "#c7d0d7";       # Foam white
           };
 
@@ -334,7 +332,7 @@
           };
 
           cursor = {
-            cursor = "#5ec8ff";       # Matching blue
+            cursor = "#025CB1";       # Matching blue
             text =   "#0a1a2f";        # Background color
           };
 
