@@ -98,7 +98,7 @@
           # ./darwinModules/development/intelDevTools.nix
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
-          # ./darwinModules/homeBrew.nix
+          ./darwinModules/homeBrew.nix
           # ./darwinModules/vimTools.nix
 
 
