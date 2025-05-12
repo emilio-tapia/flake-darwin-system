@@ -14,10 +14,6 @@
         upgrade = true;
       };
 
-      taps = [
-        "homebrew/bundle"  # Required for brew bundle command
-      ];
-
       casks = [
         "iina"
         "httpie"

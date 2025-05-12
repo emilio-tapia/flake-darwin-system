@@ -121,6 +121,9 @@
               enable = true;
               enableRosetta = true; # Enable Rosetta for running x86 apps on ARM
               user = "emilio";
+              taps = {
+                
+              }
             };
           }
         ];
