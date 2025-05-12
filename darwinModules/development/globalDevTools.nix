@@ -14,9 +14,6 @@
       nodejs
       pnpm
 
-      # JAVA
-      temurin-bin-8
-
       # PYTHON
       python313
       python3Packages.pip
