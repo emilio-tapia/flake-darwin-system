@@ -83,6 +83,7 @@
           # Properly structure Home Manager integration
           home-manager.darwinModules.home-manager
           mac-app-util.darwinModules.default
+          nix-homebrew.darwinModules.nix-homebrew
 
           # Host-specific configurations
           ./hosts/m4Pro/hardware-configuration.nix
@@ -97,7 +98,7 @@
           # ./darwinModules/development/intelDevTools.nix
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
-          # ./darwinModules/homeBrew.nix
+          ./darwinModules/homeBrew.nix
           # ./darwinModules/vimTools.nix
 
 
@@ -115,7 +116,7 @@
             };
           }
 
-          nix-homebrew.darwinModules.nix-homebrew {
+          {
             nix-homebrew = {
               enable = true;
               enableRosetta = true; # Enable Rosetta for running x86 apps on ARM
