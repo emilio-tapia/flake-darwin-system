@@ -2,10 +2,10 @@
 
 {
   options = {
-    developmentTools.enable = lib.mkEnableOption "Enable installation of development tools such as tmux, alacritty, git, nodejs, and python.";
+    globalDevTools.enable = lib.mkEnableOption "Enable installation of global development tools";
   };
 
-  config = lib.mkIf config.developmentTools.enable {
+  config = lib.mkIf config.globalDevTools.enable {
     environment.systemPackages = with pkgs; [
       git
 
