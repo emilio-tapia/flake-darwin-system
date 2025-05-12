@@ -1,8 +1,12 @@
 { config, pkgs, lib, ... }:
 
 {
-  # m4Pro-specific configuration
-  networking.hostName = "m4Pro";
+
+  # Auto upgrade nix package and the daemon service.
+  services.nix-daemon.enable = true;
+
+  # macbookPro-specific configuration
+  networking.hostName = "macbookPro";
 
   # Enable system defaults
   hardware.enable = true;
@@ -13,7 +17,6 @@
   fontPackage.enable = true;
   terminalDefaults.enable = true;
   homeBrew.enable = true;
-  vimTools.enable = true;
 
 
   # Enable specific modules
@@ -21,5 +24,4 @@
   desktopApps.enable = true;
   developmentTools.enable = true;
   # module2.enable = false;
-  # module3.enable = true;
 }
