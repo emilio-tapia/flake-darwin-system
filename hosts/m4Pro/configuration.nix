@@ -14,7 +14,7 @@
   systemDefaults.enable = true;
 
   # Enable specific modules
-  intelDevTools.enable = false;
+  # intelDevTools.enable = false;
   globalDevTools.enable = true;
   fontPackage.enable = true;
   terminalDefaults.enable = true;

@@ -94,7 +94,7 @@
           ./darwinModules/cloudTools.nix
           ./darwinModules/desktopApps.nix
           ./darwinModules/development/globalDevTools.nix
-          ./darwinModules/development/intelDevTools.nix
+          # ./darwinModules/development/intelDevTools.nix
           ./darwinModules/terminalDefaults.nix
           ./darwinModules/fontPackage.nix
           ./darwinModules/homeBrew.nix
