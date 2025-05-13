@@ -2,11 +2,9 @@
 
 {
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # macbookPro-specific configuration
   networking.hostName = "m4Pro";
+  nix.enable = false; #enable homebrew in apple silicon
 
   # Enable system defaults
   hardware.enable = true;

@@ -81,9 +81,15 @@
           inherit self inputs;
         };
         modules = [
+
+          # ({ config, ... }: {                                                          # <--
+          #   homebrew.taps = builtins.attrNames config.nix-homebrew.taps;               # <--
+          # }) 
+
           # Properly structure Home Manager integration
           home-manager.darwinModules.home-manager
           mac-app-util.darwinModules.default
+          nix-homebrew.darwinModules.nix-homebrew
           
 
           # Host-specific configurations
@@ -117,11 +123,19 @@
             };
           }
 
-          nix-homebrew.darwinModules.nix-homebrew {
+           {
             nix-homebrew = {
-              enable = true;
+              enable = false; #didn't work
               enableRosetta = true; # Enable Rosetta for running x86 apps on ARM
               user = "emilio";
+              # autoMigrate = true; # Automatically migrate existing Homebrew installations
+              # taps = {
+              #   # "conductorone/homebrew-cone" = cone-tap;
+              #   "homebrew/homebrew-core" = homebrew-core;
+              #   "homebrew/homebrew-cask" = homebrew-cask;
+              #   "nikitabobko/homebrew-tap" = nikitabobko-tap;
+              # };
+              # mutableTaps = false;
             };
           }
         ];

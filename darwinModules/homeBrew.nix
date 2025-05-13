@@ -16,6 +16,13 @@ with lib;
         upgrade = true;
       };
 
+      # brewPrefix = "/opt/homebrew/bin";
+
+      # global = {
+      #   brewfile = true;        # Exporta el Brewfile de nix-darwin a una ruta fija y lo usa
+      #   lockfiles = false;      # Previene errores de escritura al intentar generar lockfiles en la store
+      # };
+
       casks = [
         "iina"
         "httpie"

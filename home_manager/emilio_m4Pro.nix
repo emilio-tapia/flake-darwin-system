@@ -81,7 +81,7 @@
         '';
       };
 
-      initExtra = let
+      initContent = let
         fzfCmd = "${pkgs.fzf}/bin/fzf";
         fdCmd = "${pkgs.fd}/bin/fd";
       in ''
@@ -141,6 +141,11 @@
 
         # Menu selection binding
         # bindkey -M menuselect '^M' .accept-line # Makes pressing Enter (^M is Enter's control code) in the completion menu immediately execute the selected command
+
+        # HOMEBREW 
+        if [[ $(uname -m) == 'arm64' ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
       '';
 
     };
