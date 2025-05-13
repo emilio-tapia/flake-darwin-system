@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools", "wheel", "black"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "core-backend"
+version = "0.1.0"
+description = "A Django-based backend API"
+authors = [{ name = "Emilio Tapia", email = "emilio.tapia@comtelec.com" }]
+
+dependencies = [
+    "pytest-django", 
+    "pytest-order",
+    "django",
+    "django-cors-headers", 
+    "djangorestframework",
+    "djangorestframework-simplejwt",
+    "django-filter",
+    "drf-nested-routers",
+    "psycopg2_binary",
+    "black", 
+    "isort", 
+    "flake8",
+    "pillow"
+]
+
+[tool.setuptools]
+py-modules = ["manage"]
+packages = ["api_root", "core"]
+package-dir = {"" = "."}
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "api_root.settings"
+python_files=["test_*.py", "tests.py", "*_tests.py"]
+pythonpath=["."]
+log_cli = true
+addopts = "--debug"

@@ -1,10 +1,10 @@
 # Profile combinations
 { ... }:
 {
-  fullstack = { pkgs, ... }: {
+  djangoReactStack = { pkgs, ... }: {
     imports = [
-      ./frontend.nix
-      ./backend.nix
+      ./djangoRest.nix
+      ./react.nix
     ];
     
     enterShell = ''
@@ -14,6 +14,6 @@
   };
 
   default = { pkgs, ... }: {
-    imports = [ ./profiles.fullstack ];
+    imports = [ ./profiles.djangoReactStack ];
   };
 }
