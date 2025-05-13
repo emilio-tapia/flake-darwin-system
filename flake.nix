@@ -9,15 +9,16 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     devenv.url = "github:cachix/devenv/latest";
+    flake-utils.url = "github:numtide/flake-utils";
+    gitignore.url = "github:hercules-ci/gitignore.nix";
     mac-app-util.url = "github:hraban/mac-app-util";
-        # LazyVim starter template
     lazyvim = {
       url = "github:LazyVim/starter";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, mac-app-util, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:{
     darwinConfigurations = {
       # macbookPro configuration
       macbookPro = nix-darwin.lib.darwinSystem {
