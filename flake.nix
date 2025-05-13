@@ -173,6 +173,7 @@
     darwinModules = [
       home-manager.darwinModules.home-manager
       mac-app-util.darwinModules.default
+      nix-homebrew.darwinModules.nix-homebrew
       ./darwinModules/systemDefaults.nix
       ./darwinModules/desktopApps.nix
       ./darwinModules/development/devTools.nix
