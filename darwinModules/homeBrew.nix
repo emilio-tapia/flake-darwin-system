@@ -1,5 +1,7 @@
 { self, config, pkgs, lib, ... }:
 
+with lib;
+
 {
   options = {
     homeBrew.enable = lib.mkEnableOption "Enable system-wide macOS default configurations.";
@@ -12,6 +14,14 @@
         # autoUpdate = false;
         cleanup = "zap";
         upgrade = true;
+      };
+
+      brewPrefix = mkOption {
+        type = types.str;
+        default = if pkgs.stdenv.hostPlatform.isAarch64 then "/opt/homebrew/bin" else "/usr/local/bin";
+        description = ''
+          Customize path prefix where executable of <command>brew</command> is searched for.
+        '';
       };
 
       casks = [
