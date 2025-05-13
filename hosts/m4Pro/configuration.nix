@@ -18,7 +18,7 @@
   globalDevTools.enable = true;
   fontPackage.enable = true;
   terminalDefaults.enable = true;
-  homeBrew.enable = false;
+  homeBrew.enable = true;
   cloudTools.enable = true;
   desktopApps.enable = true;
 }
