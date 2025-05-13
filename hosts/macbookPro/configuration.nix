@@ -12,12 +12,12 @@
   hardware.enable = true;
   darwinConfiguration.enable = true;
   systemDefaults.enable = true;
+  intelDevTools.enable = true;
 
   # Enable specific modules
-  intelDevTools.enable = true;
   globalDevTools.enable = true;
   fontPackage.enable = true;
-  terminalDefaults.enable = true;
+  terminalTools.enable = true;
   homeBrew.enable = true;
   cloudTools.enable = true;
   desktopApps.enable = true;

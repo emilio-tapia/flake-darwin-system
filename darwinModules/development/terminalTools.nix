@@ -2,10 +2,10 @@
 
 {
   options = {
-    terminalDefaults.enable = lib.mkEnableOption "Enable installation of development tools such as tmux, alacritty, git, nodejs, and python.";
+    terminalTools.enable = lib.mkEnableOption "Enable installation of development tools such as tmux, alacritty, git, nodejs, and python.";
   };
 
-  config = lib.mkIf config.terminalDefaults.enable {
+  config = lib.mkIf config.terminalTools.enable {
     environment.systemPackages = with pkgs; [
       ranger
       
