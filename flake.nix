@@ -182,7 +182,6 @@
       ./darwinModules/fontPackage.nix
       ./darwinModules/homeBrew.nix
     ];
-
     # Function to create Darwin configurations
     mkDarwinSystem = { system, hostName, user, extraModules ? [] }: 
       nix-darwin.lib.darwinSystem {
@@ -213,6 +212,17 @@
               };
             };
 
+            # Consolidated Homebrew configuration
+            nix-homebrew = {
+              enable = (system == "x86_64-darwin"); # Only enable for Intel
+              enableRosetta = (system == "aarch64-darwin");
+              inherit user;
+              autoMigrate = true;
+              # taps = {
+              #   "homebrew/cask" = pkgs.homebrew-cask;
+              # };
+            };
+
             # Architecture-specific configurations
             nixpkgs.config.allowUnfree = true;
             nixpkgs.hostPlatform = system;
@@ -225,31 +235,62 @@
         system = "x86_64-darwin";
         hostName = "macbookPro";
         user = "admin";
-        extraModules = [
-          # ./darwinModules/development/intelDevTools.nix
-          {
-            nix-homebrew = {
-              enable = true;
-              user = "admin";
-            };
-          }
-        ];
+        # extraModules = [
+        #   # ./darwinModules/development/intelDevTools.nix
+        #   {
+        #     nix-homebrew = {
+        #       enable = true;
+        #       user = "admin";
+        #     };
+        #   }
+        # ];
       };
-
       m4Pro = mkDarwinSystem {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
-        extraModules = [
-          {
-            nix-homebrew = {
-              enable = false;
-              enableRosetta = true;
-              user = "emilio";
-            };
-          }
-        ];
+        # extraModules = [
+        #   {
+        #     nix-homebrew = {
+        #       enable = false;
+        #       enableRosetta = true;
+        #       user = "emilio";
+        #     };
+        #   }
+        # ];
       };
     };
-  };
+  } // 
+  flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # Import devenv profiles with required arguments
+      profiles = import ./devenv/profiles.nix {
+        inherit (pkgs) lib;
+        inherit pkgs;
+      };
+
+    in {
+      devShells = {
+        # default = devenv.lib.mkShell {
+        #   inherit inputs pkgs;
+        #   modules = [ profiles.djangoReactStack ];
+        # };
+
+        djangoReactStack = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [ profiles.djangoReactStack ];
+        };
+
+        # react = devenv.lib.mkShell {
+        #   inherit inputs pkgs;
+        #   modules = [ profiles.react ];
+        # };
+      };
+    }
+  );
 }

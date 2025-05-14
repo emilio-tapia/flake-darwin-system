@@ -3,8 +3,8 @@
 {
   djangoReactStack = { pkgs, ... }: {
     imports = [
-      ./djangoRest.nix
-      ./react.nix
+      ./djangoRest/djangoRest.nix
+      ./react/react.nix
     ];
     
     enterShell = ''

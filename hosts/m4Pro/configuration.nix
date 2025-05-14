@@ -13,7 +13,7 @@
   siliconDevTools.enable = true;
 
   # Enable specific modules
-  globalDevTools.enable = true;
+  devTools.enable = true;
   fontPackage.enable = true;
   terminalTools.enable = true;
   homeBrew.enable = true;

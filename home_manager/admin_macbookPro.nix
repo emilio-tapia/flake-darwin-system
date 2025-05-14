@@ -80,7 +80,7 @@
         '';
       };
 
-      initExtra = let
+      initContent = let
         fzfCmd = "${pkgs.fzf}/bin/fzf";
         fdCmd = "${pkgs.fd}/bin/fd";
       in ''

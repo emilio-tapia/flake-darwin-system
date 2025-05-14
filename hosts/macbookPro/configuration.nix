@@ -2,9 +2,6 @@
 
 {
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # macbookPro-specific configuration
   networking.hostName = "macbookPro";
 
@@ -15,7 +12,7 @@
   intelDevTools.enable = true;
 
   # Enable specific modules
-  globalDevTools.enable = true;
+  devTools.enable = true;
   fontPackage.enable = true;
   terminalTools.enable = true;
   homeBrew.enable = true;

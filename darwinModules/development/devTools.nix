@@ -2,12 +2,13 @@
 
 {
   options = {
-    globalDevTools.enable = lib.mkEnableOption "Enable installation of global development tools";
+    devTools.enable = lib.mkEnableOption "Enable installation of global development tools";
   };
 
-  config = lib.mkIf config.globalDevTools.enable {
+  config = lib.mkIf config.devTools.enable {
     environment.systemPackages = with pkgs; [
       git
+      devenv
 
       # NODE
       fnm
