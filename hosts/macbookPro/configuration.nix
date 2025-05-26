@@ -10,12 +10,12 @@
   darwinConfiguration.enable = true;
   systemDefaults.enable = true;
   intelDevTools.enable = true;
+  intelHomeBrew.enable = true;
 
   # Enable specific modules
   devTools.enable = true;
   fontPackage.enable = true;
   terminalTools.enable = true;
-  homeBrew.enable = true;
   cloudTools.enable = true;
   desktopApps.enable = true;
 }

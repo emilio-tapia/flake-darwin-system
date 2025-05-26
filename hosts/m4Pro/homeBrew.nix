@@ -4,10 +4,10 @@ with lib;
 
 {
   options = {
-    homeBrew.enable = lib.mkEnableOption "Enable system-wide macOS default configurations.";
+    siliconHomeBrew.enable = lib.mkEnableOption "Enable homebrew M4 Pro default configurations.";
   };
 
-  config = lib.mkIf config.homeBrew.enable {
+  config = lib.mkIf config.siliconHomeBrew.enable {
     homebrew = { 
       enable = true;
       onActivation = {

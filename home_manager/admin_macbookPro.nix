@@ -22,6 +22,7 @@
       terminal-notifier
       zsh-autocomplete 
       zsh-powerlevel10k
+      zsh-nix-shell
     ];
 
     file.".p10k.zsh".source = ./config/p10k/.p10k.zsh; #Copies the file at that path into ~/.p10k.zsh
@@ -56,6 +57,11 @@
           name = "powerlevel10k";
           src = pkgs.zsh-powerlevel10k;
           file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+        {
+          name = "zsh-nix-shell";
+          src = pkgs.zsh-nix-shell;
+          file = "share/zsh-nix-shell/zsh-nix-shell.plugin.zsh";
         }
       ];
 
@@ -195,75 +201,75 @@
       '';
     };
 
-    starship = {
-      enable = true;
-        settings = {
-          format = ''
-            [░▒▓](cyan)[  $all ](bg:cyan fg:black) $directory $git_branch $git_status $cmd_duration $line_break $character
-            '';
+    # starship = {
+    #   enable = true;
+    #     settings = {
+    #       format = ''
+    #         [░▒▓](cyan)[  $all ](bg:cyan fg:black) $directory $git_branch $git_status $cmd_duration $line_break $character
+    #         '';
 
-          add_newline = false;
-          scan_timeout = 10;
-          command_timeout = 2000;
-          right_format = "$time";
+    #       add_newline = false;
+    #       scan_timeout = 10;
+    #       command_timeout = 2000;
+    #       right_format = "$time";
 
-          directory = {
-            style = "bold cyan";
-            truncation_length = 3;
-            truncation_symbol = "…/";
-            substitutions = {
-              "Documents" = " ";
-              "Downloads" = " ";
-              "Music" = " ";
-              "Pictures" = " ";
-            };
-          };
+    #       directory = {
+    #         style = "bold cyan";
+    #         truncation_length = 3;
+    #         truncation_symbol = "…/";
+    #         substitutions = {
+    #           "Documents" = " ";
+    #           "Downloads" = " ";
+    #           "Music" = " ";
+    #           "Pictures" = " ";
+    #         };
+    #       };
 
-          git_branch = {
-            symbol = " ";
-            style = "bold purple";
-            format = "[$symbol$branch(:$remote_branch)]($style) ";
-          };
+    #       git_branch = {
+    #         symbol = " ";
+    #         style = "bold purple";
+    #         format = "[$symbol$branch(:$remote_branch)]($style) ";
+    #       };
 
-          git_status = {
-            style = "bold red";
-            conflicted = "🏳";
-            ahead = "⇡\${count}";
-            behind = "⇣\${count}";
-            diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
-            stashed = "★";
-            modified = " \${count}";
-            staged = " \${count}";
-            renamed = " \${count}";
-            deleted = " \${count}";
-          };
+    #       git_status = {
+    #         style = "bold red";
+    #         conflicted = "🏳";
+    #         ahead = "⇡\${count}";
+    #         behind = "⇣\${count}";
+    #         diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
+    #         stashed = "★";
+    #         modified = " \${count}";
+    #         staged = " \${count}";
+    #         renamed = " \${count}";
+    #         deleted = " \${count}";
+    #       };
 
-          time = {
-            disabled = false;
-            time_format = "%R"; # 24h format
-            style = "bold green";
-            format = "[$time]($style) ";
-          };
+    #       time = {
+    #         disabled = false;
+    #         time_format = "%R"; # 24h format
+    #         style = "bold green";
+    #         format = "[$time]($style) ";
+    #       };
 
-          character = {
-            success_symbol = "[❯](bold green)";
-            error_symbol = "[✗](bold red)";
-            vicmd_symbol = "[](bold blue)";
-          };
+    #       character = {
+    #         success_symbol = "[❯](bold green)";
+    #         error_symbol = "[✗](bold red)";
+    #         vicmd_symbol = "[](bold blue)";
+    #       };
 
-          cmd_duration = {
-            min_time = 5000;
-            format = "took [$duration]($style) ";
-            style = "bold yellow";
-          };
+    #       cmd_duration = {
+    #         min_time = 5000;
+    #         format = "took [$duration]($style) ";
+    #         style = "bold yellow";
+    #       };
 
-          # Enable transient prompt for cleaner interface
-          # transient = {
-          #   enabled = true;
-          #   format = "[$character](bold green) ";
-          # };
-        };
-    };
+    #       # Enable transient prompt for cleaner interface
+    #       # transient = {
+    #       #   enabled = true;
+    #       #   format = "[$character](bold green) ";
+    #       # };
+    #     };
+    # };
 
     alacritty = {
       enable = true;

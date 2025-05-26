@@ -7,7 +7,6 @@
 
   config = lib.mkIf config.intelDevTools.enable {
     environment.systemPackages = with pkgs; [
-
     ];
 
   # environment.variables.JAVA_HOME = "${pkgs.temurin-bin-8}";
