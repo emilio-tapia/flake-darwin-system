@@ -27,6 +27,8 @@
       appcleaner
       # camunda-modeler # didn't work intel
       # cool-retro-term # didn't work intel
+      pgadmin4
+      # davinci-resolve-studio
     ];
   };
 }

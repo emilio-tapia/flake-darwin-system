@@ -42,7 +42,8 @@ with lib;
         "sourcetree"
         "camunda-modeler"
         "cool-retro-term"
-        # "dbeaver-community"
+        # "dbeaver-community" # installed in nix
+        "dbvisualizer"
       ];
 
       caskArgs = {

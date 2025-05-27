@@ -23,6 +23,9 @@
       # Generic file processors
       pdfcpu #pdf tools
       htmlq #extract html part based on queries
+
+      # DB activity
+      pg_activity #PostgreSQL server activity monitoring
     ];
 
 
