@@ -5,7 +5,7 @@
     siliconDevTools.enable = lib.mkEnableOption "Enable installation of silicon development tools";
   };
 
-  config = lib.mkIf config.intelDevTools.enable {
+  config = lib.mkIf config.siliconDevTools.enable {
     environment.systemPackages = with pkgs; [
     ];
 

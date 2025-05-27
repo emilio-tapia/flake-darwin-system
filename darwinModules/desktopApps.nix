@@ -9,23 +9,23 @@
     environment.systemPackages = with pkgs; [
       vlc-bin             # Media player
     #   firefox         # Web browser
-    #   thunderbird     # Email client
+      thunderbird     # Email client
       dbeaver-bin         # Universal database tool _ version 24.3
       # brave
-      # slack
+      slack
       audacity
       # bitwarden-desktop
     #   bitwarden-cli
     #   keepassxc
       # keepass
-      # zoom-us
+      # responsively-app
       xld
       vscode
-      #   teams
-      # archi
-      # camunda-modeler # didn't work intel
+      teams
+      archi
       # android-studio
-      # appcleaner
+      appcleaner
+      # camunda-modeler # didn't work intel
       # cool-retro-term # didn't work intel
     ];
   };

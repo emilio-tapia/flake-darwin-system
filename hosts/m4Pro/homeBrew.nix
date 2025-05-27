@@ -28,21 +28,24 @@ with lib;
         "httpie"
         "bruno"
         # "dbschema" # app runtime error in intel
-        # "cursor"
-        # "google-chrome"
-        # "figma"
+        "cursor"
+        "google-chrome"
+        "figma"
         # "sync"
-        # "google-drive"
+        "google-drive"
         "omnidisksweeper"
         "transmission"
         "android-file-transfer"
-        # "focusrite-control"
+        "focusrite-control"
         "rightfont"
-        # "sf-symbols"
+        "sf-symbols"
         "sourcetree"
         "camunda-modeler"
         "cool-retro-term"
-        # "dbeaver-community"
+        # "dbeaver-community" # installed by nix
+        "tradingview"
+        # "appcleaner" # installed by nix
+        "sourcetree"
       ];
 
       caskArgs = {
