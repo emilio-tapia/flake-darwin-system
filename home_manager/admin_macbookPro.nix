@@ -146,6 +146,19 @@
 
         # Menu selection binding
         # bindkey -M menuselect '^M' .accept-line # Makes pressing Enter (^M is Enter's control code) in the completion menu immediately execute the selected command
+
+        # Word deletion configuration
+        autoload -U select-word-style
+        select-word-style bash
+        
+        # Alt-Backspace should delete entire words
+        bindkey '^[^?' backward-kill-word
+        
+        # macOS specific bindings
+        if [[ $(uname) = "Darwin" ]]; then
+          bindkey "∫" backward-kill-word  # Option-Backspace
+          bindkey "ç" kill-word           # Option-Delete
+        fi
       '';
 
     };
@@ -274,13 +287,17 @@
     alacritty = {
       enable = true;
       settings = {
+        # Add proper terminal definition for tmux compatibility
+        env = {
+          TERM = "xterm-256color";
+        };
         # Performance & Core Settings
         window = {
           # decorations = "none"; # Remove title bar
           padding = { x = 5; y = 5; };
           dynamic_padding = true;
           startup_mode = "Windowed";
-          title = "Terminal";
+          # title = "Terminal";
           opacity = 0.95;
         };
 
@@ -362,13 +379,86 @@
           hide_when_typing = true;
         };
 
+        # terminal.shell = {
+        #   args = ["new-session"  "-A"  "-D" "-s" "main"];
+        #   program = "${pkgs.tmux}/bin/tmux";
+        # }; # Alacritty will execute tmux directly as its "shell" / This Caused Issues Non-standard approach: Bypasses normal shell initialization (.zshrc, etc.) / Nested sessions: Might create tmux-in-tmux if you later run tmux commands
+
         terminal.shell = {
           program = "${pkgs.zsh}/bin/zsh";
+          args = [
+            "-l"
+            "-c"
+            "tmux new -A -s main" # Proper session management
+          ];
         };
-
-        # Platform-specific overrides (macOS)
-        env.TERM = "xterm-256color";
       };
+    };
+
+    tmux = {
+      enable = true;
+      terminal = "screen-256color";
+      historyLimit = 5000;
+      keyMode = "vi";
+      # shortcut = "b";  # Use as prefix Ctrl-b
+      baseIndex = 1;    # Start window numbering at 1
+      mouse = true;
+      extraConfig = ''
+        # Enable true color support
+        set -g default-terminal "tmux-256color"
+        set -ga terminal-overrides ",alacritty:RGB"
+        set -ga terminal-overrides ",alacritty:Tc"
+
+        # Split panes using | and -
+        bind * split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+
+        # Reload config with prefix r
+        bind r source-file ~/.config/tmux/tmux.conf\; display "Reloaded!"
+
+        # Vim-like pane navigation
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
+
+        # Resize panes with Alt-arrow
+        bind -n M-Left resize-pane -L 5
+        bind -n M-Right resize-pane -R 5
+        bind -n M-Up resize-pane -U 5
+        bind -n M-Down resize-pane -D 5
+
+        # Status bar customization
+        set -g status-interval 1
+        set -g status-left " #[fg=white]#S #[fg=default]"
+        set -g status-right "#[fg=white]%Y-%m-%d %H:%M "
+        set -g status-style "fg=white,bg=#2d2d2d"
+        set -g window-status-current-format "#[fg=cyan]#I:#W#F"
+        set -g window-status-format "#[fg=white]#I:#W#F"
+
+        # Fix Alt key passthrough delay
+        set -s escape-time 0
+        
+        # Ensure proper keyboard input handling
+        set -g xterm-keys on
+        set -g focus-events on
+      '';
+
+      plugins = with pkgs.tmuxPlugins; [
+        {
+          plugin = resurrect;
+          extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+        }
+        continuum
+        {
+          plugin = catppuccin;
+          extraConfig = ''
+            set -g @catppuccin_flavour 'mocha'
+            set -g @catppuccin_window_tabs_enabled on
+          '';
+        }
+        yank
+      ];
     };
   };
 

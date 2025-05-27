@@ -43,7 +43,7 @@ with lib;
         "camunda-modeler"
         "cool-retro-term"
         # "dbeaver-community" # installed in nix
-        "dbvisualizer"
+        # "dbvisualizer" #app runtime error in intel
       ];
 
       caskArgs = {
