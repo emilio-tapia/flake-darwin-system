@@ -54,7 +54,7 @@
           inherit self inputs;
           inherit hostName user;
         };
-        modules = darwinModule ++ devModules ++ extraModules ++ [
+        modules = darwinModules ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
             # Host-specific files
             imports = [
