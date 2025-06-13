@@ -30,14 +30,13 @@
       ./darwinModules/systemDefaults.nix
       ./darwinModules/desktopApps.nix
       ./darwinModules/fontPackage.nix
-      ({ config, ... }: {
+      # ({ config, ... }: {
         # Security-hardened Nix configuration
-        nix.settings = {
-          allowed-users = ["emilio" "admin"];
-          sandbox = true;
-          extra-platforms = lib.optionals (config.nixpkgs.system == "aarch64-darwin") ["x86_64-darwin"];
-        };
-      })
+        # nix.settings = {
+          # allowed-users = ["emilio" "admin"];
+          # sandbox = true;
+        # };
+      # })
     ];
 
     # Development tools modules
