@@ -44,6 +44,7 @@ with lib;
         "cool-retro-term"
         # "dbeaver-community" # installed in nix
         # "dbvisualizer" #app runtime error in intel
+        "obsidian"
       ];
 
       caskArgs = {

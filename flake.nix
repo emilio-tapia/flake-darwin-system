@@ -21,6 +21,7 @@
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
   let
+
     # Common configuration for all Darwin systems
     darwinModules = [
       home-manager.darwinModules.home-manager
@@ -28,11 +29,24 @@
       nix-homebrew.darwinModules.nix-homebrew
       ./darwinModules/systemDefaults.nix
       ./darwinModules/desktopApps.nix
+      ./darwinModules/fontPackage.nix
+      ({ config, ... }: {
+        # Security-hardened Nix configuration
+        nix.settings = {
+          allowed-users = ["emilio" "admin"];
+          sandbox = true;
+          extra-platforms = lib.optionals (config.nixpkgs.system == "aarch64-darwin") ["x86_64-darwin"];
+        };
+      })
+    ];
+
+    # Development tools modules
+    devModules = [
       ./darwinModules/development/devTools.nix
       ./darwinModules/development/cloudTools.nix
       ./darwinModules/development/terminalTools.nix
-      ./darwinModules/fontPackage.nix
     ];
+
     # Function to create Darwin configurations
     mkDarwinSystem = { system, hostName, user, extraModules ? [] }: 
       nix-darwin.lib.darwinSystem {
@@ -41,7 +55,7 @@
           inherit self inputs;
           inherit hostName user;
         };
-        modules = darwinModules ++ extraModules ++ [
+        modules = darwinModule ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
             # Host-specific files
             imports = [
@@ -51,6 +65,11 @@
               ./hosts/${hostName}/dev-tools.nix
               ./hosts/${hostName}/homeBrew.nix
             ];
+
+            # Single host configuration file
+            # imports = [ 
+            #   (./hosts + "/${hostName}/default.nix") 
+            # ];
 
             # Home Manager configuration
             home-manager = {
@@ -70,14 +89,20 @@
               enableRosetta = (system == "aarch64-darwin");
               inherit user;
               autoMigrate = true;
+              # mutableTaps = false;
               # taps = {
-              #   "homebrew/cask" = pkgs.homebrew-cask;
+              #   "homebrew/cask" = inputs.nixpkgs.legacyPackages.${system}.homebrew-cask;
               # };
             };
 
-            # Architecture-specific configurations
-            nixpkgs.config.allowUnfree = true;
-            nixpkgs.hostPlatform = system;
+             # Architecture-specific settings
+            nixpkgs = {
+              config.allowUnfree = true;
+              hostPlatform = system;
+              # overlays = [
+              #   # Custom package overlay
+              # ];
+            };
           })
         ];
       };

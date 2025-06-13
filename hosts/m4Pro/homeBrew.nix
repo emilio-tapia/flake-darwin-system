@@ -46,6 +46,7 @@ with lib;
         "tradingview"
         # "appcleaner" # installed by nix
         "sourcetree"
+        "obsidian"
       ];
 
       caskArgs = {
