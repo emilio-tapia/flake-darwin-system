@@ -58,6 +58,8 @@
         modules = darwinModules ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
             
+            nix.enable = false;
+
             system.primaryUser = user;
 
             # Host-specific files
