@@ -54,8 +54,12 @@
           inherit self inputs;
           inherit hostName user;
         };
+
         modules = darwinModules ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
+            
+            system.primaryUser = user;
+
             # Host-specific files
             imports = [
               ./hosts/${hostName}/hardware-configuration.nix
