@@ -19,6 +19,8 @@
       rnr #batch rename files and directories
       kondo #clean unneed files
       jless #cli json viewer
+      hyperfine #Command-line benchmarking tool
+      eza #Modern, maintained replacement for ls
 
       # Generic file processors
       pdfcpu #pdf tools
