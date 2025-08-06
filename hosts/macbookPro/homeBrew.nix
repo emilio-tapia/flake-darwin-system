@@ -45,6 +45,7 @@ with lib;
         # "dbeaver-community" # installed in nix
         # "dbvisualizer" #app runtime error in intel
         "obsidian"
+        "docker-desktop"
       ];
 
       caskArgs = {
