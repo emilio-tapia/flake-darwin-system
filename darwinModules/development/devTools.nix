@@ -21,7 +21,8 @@
       virtualenv
 
       # CONTAINER
-      # docker_26
+      docker
+      docker-compose
 
       # DATA VIZUALIZATION
       graphviz #Graph visualization tools
