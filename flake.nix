@@ -63,7 +63,7 @@
             
             nix.enable = false;
 
-            # system.primaryUser = user;
+            system.primaryUser = user;
 
             # Host-specific files
             imports = [
