@@ -49,6 +49,20 @@
       ./darwinModules/development/terminalTools.nix
     ];
 
+    # Function to create Home Manager configurations
+    mkHomeConfiguration = { system, hostName, user }:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        modules = [
+          ./home_manager/${user}_${hostName}.nix
+        ];
+        extraSpecialArgs = {
+          inherit inputs;
+          modulesPath = toString ./home_managerModules;
+        };
+      };
+
+
     # Function to create Darwin configurations
     mkDarwinSystem = { system, hostName, user, extraModules ? [] }: 
       nix-darwin.lib.darwinSystem {
@@ -122,6 +136,19 @@
         user = "admin";
       };
       m4Pro = mkDarwinSystem {
+        system = "aarch64-darwin";
+        hostName = "m4Pro";
+        user = "emilio";
+      };
+    };
+
+    homeConfigurations = {
+      "admin@macbookPro" = mkHomeConfiguration {
+        system = "x86_64-darwin";
+        hostName = "macbookPro";
+        user = "admin";
+      };
+      "emilio@m4Pro" = mkHomeConfiguration {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
