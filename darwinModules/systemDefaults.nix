@@ -10,6 +10,7 @@
 
     environment.systemPackages = with pkgs; [
       nix-prefetch-github
+      home-manager
     ];
 
     system.defaults = {
