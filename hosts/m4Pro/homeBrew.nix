@@ -47,7 +47,7 @@ with lib;
         # "appcleaner" # installed by nix
         "sourcetree"
         "obsidian"
-        "docker-desktop"
+        "docker"
       ];
 
       caskArgs = {

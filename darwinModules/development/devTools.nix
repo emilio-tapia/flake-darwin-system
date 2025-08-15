@@ -21,8 +21,8 @@
       virtualenv
 
       # CONTAINER
-      docker
-      docker-compose
+      # docker #homebrew
+      # docker-compose #homebrew
 
       # DATA VIZUALIZATION
       graphviz #Graph visualization tools
