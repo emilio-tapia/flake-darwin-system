@@ -13,7 +13,7 @@
 
       # CPU STATS
       btop #htop
-      below # resource monitor for modern Linux systems
+      #below # resource monitor for modern Linux systems (only for linux)
 
       # CLI utilities
       tokei #count code statistics
