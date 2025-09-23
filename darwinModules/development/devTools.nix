@@ -20,9 +20,16 @@
       python3Packages.pip
       virtualenv
 
+      # AUTOMATION
+      n8n
+
       # CONTAINER
       # docker #homebrew
       # docker-compose #homebrew
+      oxker #view & control docker containers
+
+      #SECRETS
+      doppler #CLI for interacting with your Doppler Enclave secrets and configuration
 
       # DATA VIZUALIZATION
       graphviz #Graph visualization tools
