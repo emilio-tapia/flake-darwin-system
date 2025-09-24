@@ -201,12 +201,6 @@
         presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
         rounded_corners = true;
         proc_sorting = "cpu lazy";
-        theme = {
-          my-theme = ''
-            theme[main_bg]="#282a36"
-            theme[main_fg]="#f8f8f2"
-          '';
-        };
       };
     }; # https://github.com/aristocratos/btop#configurability
 
