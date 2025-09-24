@@ -487,7 +487,7 @@
           main = {
             smart_completion = true;
             destructive_warning = true;
-            table_format = psql;
+            table_format = "psql";
             vi = false;
             keyring = true;
           };
