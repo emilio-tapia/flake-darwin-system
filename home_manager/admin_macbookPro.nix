@@ -5,24 +5,30 @@
   # Basic Home Manager configuration
   home = {
     username = "admin";
+    homeDirectory = lib.mkDefault "/Users/admin";  
     stateVersion = "23.11";
 
     packages = with pkgs; [
       atuin #shell history
       htop
+      btop #htop
       tmux
       alacritty
       yazi #terminal file manager 
       cheat
-      fd
+      fd #alternative to find
       fzf
-      ripgrep
+      ripgrep #extends speed of grep
       bat # For file previews
-      eza # For directory previews
+      eza #Modern, maintained replacement for ls
       terminal-notifier
       zsh-autocomplete 
       zsh-powerlevel10k
       zsh-nix-shell
+      jq #command-line JSON processor
+      jqp #TUI playground to experiment with jq
+      pgcli #Command-line interface for PostgreSQL
+      # powerline-go #prompt for Bash, ZSH and Fish
     ];
 
     file.".p10k.zsh".source = ./config/p10k/.p10k.zsh; #Copies the file at that path into ~/.p10k.zsh
@@ -198,6 +204,19 @@
       };
     }; # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
 
+    btop = {
+      enable = true;
+      settings = {
+        color_theme = "Default";
+        theme_background = true;
+        truecolor = true;
+        vim_keys = false;
+        presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
+        rounded_corners = true;
+        proc_sorting = "cpu lazy";
+      };
+    }; # https://github.com/aristocratos/btop#configurability
+
     neovim = {
       enable = true;
 
@@ -215,75 +234,75 @@
       '';
     };
 
-    # starship = {
-    #   enable = true;
-    #     settings = {
-    #       format = ''
-    #         [░▒▓](cyan)[  $all ](bg:cyan fg:black) $directory $git_branch $git_status $cmd_duration $line_break $character
-    #         '';
+    starship = {
+      enable = false;
+        settings = {
+          format = ''
+            [░▒▓](cyan)[  $all ](bg:cyan fg:black) $directory $git_branch $git_status $cmd_duration $line_break $character
+            '';
 
-    #       add_newline = false;
-    #       scan_timeout = 10;
-    #       command_timeout = 2000;
-    #       right_format = "$time";
+          add_newline = false;
+          scan_timeout = 10;
+          command_timeout = 2000;
+          right_format = "$time";
 
-    #       directory = {
-    #         style = "bold cyan";
-    #         truncation_length = 3;
-    #         truncation_symbol = "…/";
-    #         substitutions = {
-    #           "Documents" = " ";
-    #           "Downloads" = " ";
-    #           "Music" = " ";
-    #           "Pictures" = " ";
-    #         };
-    #       };
+          directory = {
+            style = "bold cyan";
+            truncation_length = 3;
+            truncation_symbol = "…/";
+            substitutions = {
+              "Documents" = " ";
+              "Downloads" = " ";
+              "Music" = " ";
+              "Pictures" = " ";
+            };
+          };
 
-    #       git_branch = {
-    #         symbol = " ";
-    #         style = "bold purple";
-    #         format = "[$symbol$branch(:$remote_branch)]($style) ";
-    #       };
+          git_branch = {
+            symbol = " ";
+            style = "bold purple";
+            format = "[$symbol$branch(:$remote_branch)]($style) ";
+          };
 
-    #       git_status = {
-    #         style = "bold red";
-    #         conflicted = "🏳";
-    #         ahead = "⇡\${count}";
-    #         behind = "⇣\${count}";
-    #         diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
-    #         stashed = "★";
-    #         modified = " \${count}";
-    #         staged = " \${count}";
-    #         renamed = " \${count}";
-    #         deleted = " \${count}";
-    #       };
+          git_status = {
+            style = "bold red";
+            conflicted = "🏳";
+            ahead = "⇡\${count}";
+            behind = "⇣\${count}";
+            diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
+            stashed = "★";
+            modified = " \${count}";
+            staged = " \${count}";
+            renamed = " \${count}";
+            deleted = " \${count}";
+          };
 
-    #       time = {
-    #         disabled = false;
-    #         time_format = "%R"; # 24h format
-    #         style = "bold green";
-    #         format = "[$time]($style) ";
-    #       };
+          time = {
+            disabled = false;
+            time_format = "%R"; # 24h format
+            style = "bold green";
+            format = "[$time]($style) ";
+          };
 
-    #       character = {
-    #         success_symbol = "[❯](bold green)";
-    #         error_symbol = "[✗](bold red)";
-    #         vicmd_symbol = "[](bold blue)";
-    #       };
+          character = {
+            success_symbol = "[❯](bold green)";
+            error_symbol = "[✗](bold red)";
+            vicmd_symbol = "[](bold blue)";
+          };
 
-    #       cmd_duration = {
-    #         min_time = 5000;
-    #         format = "took [$duration]($style) ";
-    #         style = "bold yellow";
-    #       };
+          cmd_duration = {
+            min_time = 5000;
+            format = "took [$duration]($style) ";
+            style = "bold yellow";
+          };
 
-    #       # Enable transient prompt for cleaner interface
-    #       # transient = {
-    #       #   enabled = true;
-    #       #   format = "[$character](bold green) ";
-    #       # };
-    #     };
-    # };
+          # Enable transient prompt for cleaner interface
+          # transient = {
+          #   enabled = true;
+          #   format = "[$character](bold green) ";
+          # };
+        };
+    };
 
     alacritty = {
       enable = true;
@@ -461,6 +480,66 @@
         yank
       ];
     };
+
+    eza = {
+      enable = true;
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/eza.nix
+
+    ripgrep = {
+      enable = true;
+    }; # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+    # https://github.com/nix-community/home-manager/blob/master/modules/programs/ripgrep.nix
+
+    fd = {
+      enable = true;
+      ignores = [
+          ".git/"
+          "*.bak"
+        ];
+      hidden = true;
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/fd.nix
+
+    pgcli = {
+      enable = true;
+      settings = {
+          main = {
+            smart_completion = true;
+            destructive_warning = true;
+            table_format = psql;
+            vi = false;
+            keyring = true;
+          };
+
+          # "named queries".simple = "select * from abc where a is not Null";
+        }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
+    # https://www.pgcli.com/config
+
+    jq = {
+      enable = true;
+      colors = {
+        null       = "1;30";
+        false      = "0;31";
+        true       = "0;32";
+        numbers    = "0;36";
+        strings    = "0;33";
+        arrays     = "1;35";
+        objects    = "1;37";
+        objectKeys = "1;34";
+      }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
+
+    jqp = {
+      enable = true;
+      settings = {
+        theme = {
+          chromaStyleOverrides = {
+            kc = "#009900 underline";
+          };
+          name = "monokai";
+        };
+      }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
   };
 
     # Deploy LazyVim starter files
