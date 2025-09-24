@@ -491,9 +491,8 @@
             vi = false;
             keyring = true;
           };
-
           # "named queries".simple = "select * from abc where a is not Null";
-        }
+        };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
     # https://www.pgcli.com/config
 
