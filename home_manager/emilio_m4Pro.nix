@@ -193,7 +193,7 @@
             theme[main_bg]="#282a36"
             theme[main_fg]="#f8f8f2"
           '';
-        }
+        };
       };
     }; # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
 
