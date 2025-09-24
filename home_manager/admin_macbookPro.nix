@@ -505,13 +505,12 @@
           main = {
             smart_completion = true;
             destructive_warning = true;
-            table_format = psql;
+            table_format = "psql";
             vi = false;
             keyring = true;
           };
-
           # "named queries".simple = "select * from abc where a is not Null";
-        }
+        };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
     # https://www.pgcli.com/config
 
@@ -526,7 +525,7 @@
         arrays     = "1;35";
         objects    = "1;37";
         objectKeys = "1;34";
-      }
+      };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
 
     jqp = {
@@ -538,7 +537,7 @@
           };
           name = "monokai";
         };
-      }
+      };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
   };
 
