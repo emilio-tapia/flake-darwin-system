@@ -12,20 +12,15 @@
       mprocs #TUI tool to run multiple commands in parallel
 
       # CPU STATS
-      btop #htop
       #below # resource monitor for modern Linux systems (only for linux)
-
       # CLI utilities
       tokei #count code statistics
       rnr #batch rename files and directories
       kondo #clean unneed files
       jless #cli json viewer
       hyperfine #Command-line benchmarking tool
-      eza #Modern, maintained replacement for ls
-      ripgrep #extends speed of grep
-      fd #alternative to find
       pass #synchronizes passwords securely
-      jq #command-line JSON processor
+
 
 
 
