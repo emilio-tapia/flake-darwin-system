@@ -507,7 +507,7 @@
         arrays     = "1;35";
         objects    = "1;37";
         objectKeys = "1;34";
-      }
+      };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
 
     jqp = {
@@ -519,7 +519,7 @@
           };
           name = "monokai";
         };
-      }
+      };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
 
   };
