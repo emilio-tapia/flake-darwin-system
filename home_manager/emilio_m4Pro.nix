@@ -11,18 +11,24 @@
     packages = with pkgs; [
       atuin #shell history
       htop
+      btop #htop
       tmux
       alacritty
       yazi #terminal file manager 
       cheat
-      fd
+      fd #alternative to find
       fzf
-      ripgrep
+      ripgrep #extends speed of grep
       bat # For file previews
-      eza # For directory previews
+      eza #Modern, maintained replacement for ls
       terminal-notifier
       zsh-autocomplete 
       zsh-powerlevel10k
+      zsh-nix-shell
+      jq #command-line JSON processor
+      jqp #TUI playground to experiment with jq
+      pgcli #Command-line interface for PostgreSQL
+      # powerline-go #prompt for Bash, ZSH and Fish
     ];
 
     file.".p10k.zsh".source = ./config/p10k/.p10k.zsh; #Copies the file at that path into ~/.p10k.zsh
@@ -182,8 +188,27 @@
         show_program_path = true;
         tree_view = true;
         highlight_base_name = true;
+        theme = {
+          my-theme = ''
+            theme[main_bg]="#282a36"
+            theme[main_fg]="#f8f8f2"
+          '';
+        }
       };
     }; # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
+
+    btop = {
+      enable = true;
+      settings = {
+        color_theme = "Default";
+        theme_background = true;
+        truecolor = true;
+        vim_keys = false;
+        presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
+        rounded_corners = true;
+        proc_sorting = "cpu lazy";
+      };
+    }; # https://github.com/aristocratos/btop#configurability
 
     neovim = {
       enable = true;
@@ -203,7 +228,7 @@
     };
 
     starship = {
-      enable = true;
+      enable = false;
         settings = {
           format = ''
             [░▒▓](cyan)[  $all ](bg:cyan fg:black) $directory $git_branch $git_status $cmd_duration $line_break $character
@@ -371,6 +396,133 @@
         env.TERM = "xterm-256color";
       };
     };
+
+    tmux = {
+      enable = true;
+      terminal = "screen-256color";
+      historyLimit = 5000;
+      keyMode = "vi";
+      # shortcut = "b";  # Use as prefix Ctrl-b
+      baseIndex = 1;    # Start window numbering at 1
+      mouse = true;
+      extraConfig = ''
+        # Enable true color support
+        set -g default-terminal "tmux-256color"
+        set -ga terminal-overrides ",alacritty:RGB"
+        set -ga terminal-overrides ",alacritty:Tc"
+
+        # Split panes using | and -
+        bind * split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+
+        # Reload config with prefix r
+        bind r source-file ~/.config/tmux/tmux.conf\; display "Reloaded!"
+
+        # Vim-like pane navigation
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
+
+        # Resize panes with Alt-arrow
+        bind -n M-Left resize-pane -L 5
+        bind -n M-Right resize-pane -R 5
+        bind -n M-Up resize-pane -U 5
+        bind -n M-Down resize-pane -D 5
+
+        # Status bar customization
+        set -g status-interval 1
+        set -g status-left " #[fg=white]#S #[fg=default]"
+        set -g status-right "#[fg=white]%Y-%m-%d %H:%M "
+        set -g status-style "fg=white,bg=#2d2d2d"
+        set -g window-status-current-format "#[fg=cyan]#I:#W#F"
+        set -g window-status-format "#[fg=white]#I:#W#F"
+
+        # Fix Alt key passthrough delay
+        set -s escape-time 0
+        
+        # Ensure proper keyboard input handling
+        set -g xterm-keys on
+        set -g focus-events on
+      '';
+
+      plugins = with pkgs.tmuxPlugins; [
+        {
+          plugin = resurrect;
+          extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+        }
+        continuum
+        {
+          plugin = catppuccin;
+          extraConfig = ''
+            set -g @catppuccin_flavour 'mocha'
+            set -g @catppuccin_window_tabs_enabled on
+          '';
+        }
+        yank
+      ];
+    };
+
+    eza = {
+      enable = true;
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/eza.nix
+
+    ripgrep = {
+      enable = true;
+    }; # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+    # https://github.com/nix-community/home-manager/blob/master/modules/programs/ripgrep.nix
+
+    fd = {
+      enable = true;
+      ignores = [
+          ".git/"
+          "*.bak"
+        ];
+      hidden = true;
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/fd.nix
+
+    pgcli = {
+      enable = true;
+      settings = {
+          main = {
+            smart_completion = true;
+            destructive_warning = true;
+            table_format = psql;
+            vi = false;
+            keyring = true;
+          };
+
+          # "named queries".simple = "select * from abc where a is not Null";
+        }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
+    # https://www.pgcli.com/config
+
+    jq = {
+      enable = true;
+      colors = {
+        null       = "1;30";
+        false      = "0;31";
+        true       = "0;32";
+        numbers    = "0;36";
+        strings    = "0;33";
+        arrays     = "1;35";
+        objects    = "1;37";
+        objectKeys = "1;34";
+      }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
+
+    jqp = {
+      enable = true;
+      settings = {
+        theme = {
+          chromaStyleOverrides = {
+            kc = "#009900 underline";
+          };
+          name = "monokai";
+        };
+      }
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
+
   };
 
     # Deploy LazyVim starter files
