@@ -21,7 +21,7 @@
       virtualenv
 
       # AUTOMATION
-      n8n
+      # n8n
 
       # CONTAINER
       # docker #homebrew
