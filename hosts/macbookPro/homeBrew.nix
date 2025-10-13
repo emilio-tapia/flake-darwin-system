@@ -28,7 +28,7 @@ with lib;
         "httpie"
         "bruno"
         # "dbschema" # app runtime error in intel
-        "cursor"
+        # "cursor"
         "google-chrome"
         # "figma"
         # "sync"
