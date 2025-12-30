@@ -48,7 +48,6 @@ with lib;
         "sourcetree"
         "obsidian"
         "docker"
-        # "poppler"
       ];
 
       caskArgs = {
@@ -63,6 +62,7 @@ with lib;
         "tree"
         # "postgresql@16"
         # "fzf" #installed in home-manager
+        "poppler"
       ];
 
       masApps = {
