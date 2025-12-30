@@ -48,6 +48,7 @@ with lib;
         "sourcetree"
         "obsidian"
         "docker"
+        "poppler"
       ];
 
       caskArgs = {

@@ -46,6 +46,7 @@ with lib;
         # "dbvisualizer" #app runtime error in intel
         "obsidian"
         "docker"
+        "poppler"
       ];
 
       caskArgs = {
