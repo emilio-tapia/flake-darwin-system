@@ -48,6 +48,9 @@ with lib;
         "sourcetree"
         "obsidian"
         "docker"
+        "losslesscut"
+        "handbrake"
+        
       ];
 
       caskArgs = {
