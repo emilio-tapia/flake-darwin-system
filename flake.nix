@@ -4,13 +4,19 @@
 
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-2024.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     # nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin-2024.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+    nix-darwin-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
     nix-darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     # home-manager.url = "github:nix-community/home-manager"; # Reference to home-manager for user-level configurations
+    home-manager-2024.url = "github:nix-community/home-manager/release-24.11"; 
+    home-manager-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
     home-manager.url = "github:nix-community/home-manager/release-25.05"; 
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
@@ -23,25 +29,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
+  outputs = { self, nixpkgs-2024, nixpkgs, nix-darwin-2024, nix-darwin, home-manager-2024, home-manager, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
   let
-
-    # Common configuration for all Darwin systems
-    darwinModules = [
-      home-manager.darwinModules.home-manager
-      mac-app-util.darwinModules.default
-      nix-homebrew.darwinModules.nix-homebrew
-      ./darwinModules/systemDefaults.nix
-      ./darwinModules/desktopApps.nix
-      ./darwinModules/fontPackage.nix
-      # ({ config, ... }: {
-        # Security-hardened Nix configuration
-        # nix.settings = {
-          # allowed-users = ["emilio" "admin"];
-          # sandbox = true;
-        # };
-      # })
-    ];
 
     # Development tools modules
     devModules = [
@@ -51,9 +40,13 @@
     ];
 
     # Function to create Home Manager configurations
-    mkHomeConfiguration = { system, hostName, user }:
-      home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+    mkHomeConfiguration = { system, hostName, user, nixpkgsInput, homeManagerInput }:
+      homeManagerInput.lib.homeManagerConfiguration {
+        pkgs = import nixpkgsInput {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        # pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ./home_manager/${user}_${hostName}.nix
         ];
@@ -65,20 +58,38 @@
 
 
     # Function to create Darwin configurations
-    mkDarwinSystem = { system, hostName, user, extraModules ? [] }: 
-      nix-darwin.lib.darwinSystem {
+    mkDarwinSystem = { system, hostName, user, nixpkgsInput, nixDarwinInput, homeManagerInput, extraModules ? [] }: 
+      nixDarwinInput.lib.darwinSystem {
         inherit system;
+        pkgs = import nixpkgsInput {
+          inherit system;
+          config.allowUnfree = true;
+        };
         specialArgs = { 
           inherit self inputs;
           inherit hostName user;
         };
 
-        modules = darwinModules ++ devModules ++ extraModules ++ [
+        modules = [
+          homeManagerInput.darwinModules.home-manager
+          mac-app-util.darwinModules.default
+          nix-homebrew.darwinModules.nix-homebrew
+          ./darwinModules/systemDefaults.nix
+          ./darwinModules/desktopApps.nix
+          ./darwinModules/fontPackage.nix
+          # ({ config, ... }: {
+            # Security-hardened Nix configuration
+            # nix.settings = {
+              # allowed-users = ["emilio" "admin"];
+              # sandbox = true;
+            # };
+          # })
+        ] ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
             
             nix.enable = false;
 
-            # system.primaryUser = user;
+            system.primaryUser = user;
 
             # Host-specific files
             imports = [
@@ -135,11 +146,17 @@
         system = "x86_64-darwin";
         hostName = "macbookPro";
         user = "admin";
+        nixpkgsInput = nixpkgs-2024;
+        nixDarwinInput = nix-darwin-2024;
+        homeManagerInput = home-manager-2024;
       };
       m4Pro = mkDarwinSystem {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
+        nixpkgsInput = nixpkgs;
+        nixDarwinInput = nix-darwin;
+        homeManagerInput = home-manager;
       };
     };
 
@@ -148,11 +165,15 @@
         system = "x86_64-darwin";
         hostName = "macbookPro";
         user = "admin";
+        nixpkgsInput = nixpkgs-2024;
+        homeManagerInput = home-manager-2024;
       };
       "emilio@m4Pro" = mkHomeConfiguration {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
+        nixpkgsInput = nixpkgs;
+        homeManagerInput = home-manager;
       };
     };
   } // 
