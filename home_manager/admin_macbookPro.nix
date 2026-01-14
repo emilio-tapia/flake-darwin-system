@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, nvimModules, ... }:
+{ inputs, config, pkgs, lib, option, nvimModules, ... }:
 
 {
   
