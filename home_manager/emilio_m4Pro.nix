@@ -502,21 +502,24 @@
         objects    = "1;37";
         objectKeys = "1;34";
       };
-    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
-
+    };# https://github.com/nix-community/home-manager/blob/master/modules/programs/jq.nix
+  }
+  // lib.optionalAttrs (options.programs ? jqp) {
     jqp = {
       enable = true;
       settings = {
         theme = {
+          name = "monokai";
           chromaStyleOverrides = {
             kc = "#009900 underline";
           };
-          name = "monokai";
         };
       };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
-
   };
+
+
+  
 
     # Deploy LazyVim starter files
   xdg.configFile."nvim" = {
