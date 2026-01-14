@@ -475,20 +475,7 @@
       hidden = true;
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/fd.nix
 
-    pgcli = {
-      enable = true;
-      settings = {
-          main = {
-            smart_completion = true;
-            destructive_warning = true;
-            table_format = "psql";
-            vi = false;
-            keyring = true;
-          };
-          # "named queries".simple = "select * from abc where a is not Null";
-        };
-    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
-    # https://www.pgcli.com/config
+    
 
     jq = {
       enable = true;
@@ -516,6 +503,22 @@
         };
       };
     }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/jqp.nix
+  }
+  // lib.optionalAttrs (options.programs ? pgcli) {
+    pgcli = {
+      enable = true;
+      settings = {
+          main = {
+            smart_completion = true;
+            destructive_warning = true;
+            table_format = "psql";
+            vi = false;
+            keyring = true;
+          };
+          # "named queries".simple = "select * from abc where a is not Null";
+        };
+    }; # https://github.com/nix-community/home-manager/blob/master/modules/programs/pgcli.nix
+    # https://www.pgcli.com/config
   };
 
 
