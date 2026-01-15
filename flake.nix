@@ -87,7 +87,7 @@
         ] ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
             
-            nix.enable = false;
+            nix.enable = (system == "x86_64-darwin");
 
             system.primaryUser = user;
 

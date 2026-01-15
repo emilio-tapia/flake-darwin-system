@@ -12,6 +12,7 @@
 
     # Either this one, which blanket allows all unfree packages
     nixpkgs.config.allowUnfree = true;
+    nixpkgs.hostPlatform = "x86_64-darwin";
 
     
     users.users.admin = {
