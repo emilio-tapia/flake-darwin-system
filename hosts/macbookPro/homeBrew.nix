@@ -47,6 +47,7 @@ with lib;
         "obsidian"
         "docker"
         # "poppler"
+        "claude-code"
       ];
 
       caskArgs = {
