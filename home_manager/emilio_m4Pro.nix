@@ -155,7 +155,7 @@
         fi
 
 
-        # Add it to your PATH temporarily to test binaries
+        # modifies the PATH environment variable, which tells your shell where to look for executable programs
         export PATH="$HOME/.local/bin:$PATH"
       '';
 
