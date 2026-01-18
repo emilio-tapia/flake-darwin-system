@@ -9,10 +9,10 @@
     # nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin-2024.url = "github:lnl7/nix-darwin";
     nix-darwin-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
-    nix-darwin.url = "github:lnl7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     # home-manager.url = "github:nix-community/home-manager"; # Reference to home-manager for user-level configurations
-    home-manager-2024.url = "github:nix-community/home-manager/release-22.11"; 
+    home-manager-2024.url = "github:nix-community/home-manager/release-23.11"; 
     home-manager-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
     home-manager.url = "github:nix-community/home-manager/release-25.05"; 
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
