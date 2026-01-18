@@ -156,7 +156,7 @@
 
 
         # Add it to your PATH temporarily to test binaries
-        # export PATH="$HOME/.local/bin:$PATH"
+        export PATH="$HOME/.local/bin:$PATH"
       '';
 
     };
