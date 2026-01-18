@@ -45,8 +45,8 @@
       enable = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      # dotDir = ".config/zsh"; # relative paths
-      dotDir = "${config.xdg.configHome}/zsh";
+      dotDir = ".config/zsh"; # relative paths
+      # dotDir = "${config.xdg.configHome}/zsh";
 
       history = {
         size = 10000;
