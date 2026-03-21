@@ -21,16 +21,33 @@
       hyperfine #Command-line benchmarking tool
       pass #synchronizes passwords securely
 
-
-
-
       # Generic file processors
       pdfcpu #pdf tools
       htmlq #extract html part based on queries
+      pdfgrep #Commandline utility to search text in PDF files
+      # mcat #cat command for documents/images/videos and more
       # poppler #PDF rendering library
 
       # DB activity
       pg_activity #PostgreSQL server activity monitoring
+
+      #Git
+      lazygit
+
+      #JSON
+      jiq #Interactive JSON query tool using jq expressions
+
+      jrnl #stores your journal in a plain text file
+      doxx #Terminal document viewer for .docx files
+      # xleak #Terminal Excel viewer with an interactive TUI
+      kakoune #Vim inspired text editor
+      mergiraf #Mergiraf can solve a wide range of Git merge conflicts. 
+      cariddi #Crawler for URLs and endpoints
+      so #TUI to StackExchange network
+      # tldx #Domain availability research tool
+      ticker #Terminal stock ticker with live updates and position tracking
+      tldr #Simplified and community-driven man pages
+      # pngoptimizer #PNG optimizer and converter
     ];
 
 

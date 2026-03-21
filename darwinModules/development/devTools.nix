@@ -7,8 +7,15 @@
 
   config = lib.mkIf config.devTools.enable {
     environment.systemPackages = with pkgs; [
+      opencode #AI coding agent built for the terminal
       git
+      # gitlogue
       devenv
+      pgcli #Command-line interface for PostgreSQL
+      zizmor #Tool for finding security issues in GitHub Actions setups
+
+      #SEARCH
+      ast-grep #Fast and polyglot tool for code searching, linting, rewriting at large scale
 
       # NODE
       fnm
