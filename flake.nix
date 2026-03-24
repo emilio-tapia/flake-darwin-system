@@ -3,20 +3,13 @@
   description = "Emilio Mac Nix-Darwin Flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-2024.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    # nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin-2024.url = "github:lnl7/nix-darwin";
-    nix-darwin-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    # home-manager.url = "github:nix-community/home-manager"; # Reference to home-manager for user-level configurations
-    home-manager-2024.url = "github:nix-community/home-manager/release-23.11"; 
-    home-manager-2024.inputs.nixpkgs.follows = "nixpkgs-2024";
-    home-manager.url = "github:nix-community/home-manager/release-25.05"; 
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +22,7 @@
     };
   };
 
-  outputs = { self, nixpkgs-2024, nixpkgs, nix-darwin-2024, nix-darwin, home-manager-2024, home-manager, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, determinate, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
   let
 
     # Development tools modules
@@ -40,13 +33,12 @@
     ];
 
     # Function to create Home Manager configurations
-    mkHomeConfiguration = { system, hostName, user, nixpkgsInput, homeManagerInput }:
-      homeManagerInput.lib.homeManagerConfiguration {
-        pkgs = import nixpkgsInput {
+    mkHomeConfiguration = { system, hostName, user }:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
-        # pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ./home_manager/${user}_${hostName}.nix
         ];
@@ -56,38 +48,29 @@
         };
       };
 
-
     # Function to create Darwin configurations
-    mkDarwinSystem = { system, hostName, user, nixpkgsInput, nixDarwinInput, homeManagerInput, extraModules ? [] }: 
-      nixDarwinInput.lib.darwinSystem {
+    mkDarwinSystem = { system, hostName, user, extraModules ? [] }:
+      nix-darwin.lib.darwinSystem {
         inherit system;
-        pkgs = import nixpkgsInput {
+        pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
-        specialArgs = { 
+        specialArgs = {
           inherit self inputs;
           inherit hostName user;
         };
 
         modules = [
-          homeManagerInput.darwinModules.home-manager
+          determinate.darwinModules.default
+          home-manager.darwinModules.home-manager
           mac-app-util.darwinModules.default
           nix-homebrew.darwinModules.nix-homebrew
           ./darwinModules/systemDefaults.nix
           ./darwinModules/desktopApps.nix
           ./darwinModules/fontPackage.nix
-          # ({ config, ... }: {
-            # Security-hardened Nix configuration
-            # nix.settings = {
-              # allowed-users = ["emilio" "admin"];
-              # sandbox = true;
-            # };
-          # })
         ] ++ devModules ++ extraModules ++ [
           ({ config, pkgs, ... }: {
-            
-            nix.enable = (system == "x86_64-darwin");
 
             system.primaryUser = user;
 
@@ -99,11 +82,6 @@
               ./hosts/${hostName}/dev-tools.nix
               ./hosts/${hostName}/homeBrew.nix
             ];
-
-            # Single host configuration file
-            # imports = [ 
-            #   (./hosts + "/${hostName}/default.nix") 
-            # ];
 
             # Home Manager configuration
             home-manager = {
@@ -123,19 +101,12 @@
               enableRosetta = (system == "aarch64-darwin");
               inherit user;
               autoMigrate = true;
-              # mutableTaps = false;
-              # taps = {
-              #   "homebrew/cask" = inputs.nixpkgs.legacyPackages.${system}.homebrew-cask;
-              # };
             };
 
-             # Architecture-specific settings
+            # Architecture-specific settings
             nixpkgs = {
               config.allowUnfree = true;
               hostPlatform = system;
-              # overlays = [
-              #   # Custom package overlay
-              # ];
             };
           })
         ];
@@ -146,17 +117,11 @@
         system = "x86_64-darwin";
         hostName = "macbookPro";
         user = "admin";
-        nixpkgsInput = nixpkgs-2024;
-        nixDarwinInput = nix-darwin-2024;
-        homeManagerInput = home-manager-2024;
       };
       m4Pro = mkDarwinSystem {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
-        nixpkgsInput = nixpkgs;
-        nixDarwinInput = nix-darwin;
-        homeManagerInput = home-manager;
       };
     };
 
@@ -165,18 +130,14 @@
         system = "x86_64-darwin";
         hostName = "macbookPro";
         user = "admin";
-        nixpkgsInput = nixpkgs-2024;
-        homeManagerInput = home-manager-2024;
       };
       "emilio@m4Pro" = mkHomeConfiguration {
         system = "aarch64-darwin";
         hostName = "m4Pro";
         user = "emilio";
-        nixpkgsInput = nixpkgs;
-        homeManagerInput = home-manager;
       };
     };
-  } // 
+  } //
   flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs {
@@ -192,20 +153,10 @@
 
     in {
       devShells = {
-        # default = devenv.lib.mkShell {
-        #   inherit inputs pkgs;
-        #   modules = [ profiles.djangoReactStack ];
-        # };
-
         djangoReactStack = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [ profiles.djangoReactStack ];
         };
-
-        # react = devenv.lib.mkShell {
-        #   inherit inputs pkgs;
-        #   modules = [ profiles.react ];
-        # };
       };
     }
   );

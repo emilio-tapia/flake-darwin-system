@@ -11,8 +11,7 @@
       nix.settings.experimental-features = "nix-command flakes";
 
     # Either this one, which blanket allows all unfree packages
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.hostPlatform = "x86_64-darwin";
+    # nixpkgs.config.allowUnfree and hostPlatform are set in flake.nix mkDarwinSystem
 
     
     users.users.admin = {
