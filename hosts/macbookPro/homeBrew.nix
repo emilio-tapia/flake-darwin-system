@@ -1,10 +1,8 @@
 { self, config, pkgs, lib, ... }:
 
-with lib;
-
 {
   options = {
-   intelHomeBrew.enable = lib.mkEnableOption "Enable homebrew M4 Pro default configurations.";
+   intelHomeBrew.enable = lib.mkEnableOption "Enable homebrew Intel MacBook Pro default configurations.";
   };
 
   config = lib.mkIf config.intelHomeBrew.enable {
@@ -45,7 +43,7 @@ with lib;
         # "dbeaver-community" # installed in nix
         # "dbvisualizer" #app runtime error in intel
         "obsidian"
-        "docker"
+        "docker-desktop"
         # "poppler"
         "claude-code"
       ];

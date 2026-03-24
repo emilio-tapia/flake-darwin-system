@@ -1,7 +1,5 @@
 { self, config, pkgs, lib, ... }:
 
-with lib;
-
 {
   options = {
     siliconHomeBrew.enable = lib.mkEnableOption "Enable homebrew M4 Pro default configurations.";
@@ -45,9 +43,8 @@ with lib;
         # "dbeaver-community" # installed by nix
         "tradingview"
         # "appcleaner" # installed by nix
-        "sourcetree"
         "obsidian"
-        "docker"
+        "docker-desktop"
         "losslesscut"
         "handbrake-app"
         
@@ -85,7 +82,6 @@ with lib;
         # "torra" #Maniacsan/homebrew-torrra/torrra
         # "cronboard" #A terminal tool for managing cron jobs locally and on servers.
         # "unhappychoice/tap/gittype" #A terminal code-typing game that turns your source code into typing challenges.
-        # "Adembc/homebrew-tap/lazyssh" #A terminal-based SSH manager.
         # "miklosn/tap/cmdperf" #Benchmark and compare shell commands interactively.
         # "Fguedes90/tap/lazycelery" #A TUI for monitoring and managing Celery workers and tasks.
         # "conikeec/tap/mcp-probe" #Advanced MCP Protocol Debugger & Interactive TUI.
