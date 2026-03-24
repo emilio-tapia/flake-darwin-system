@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: 
+{ config, pkgs, lib, user, ... }:
 
 {
   options = {
@@ -8,6 +8,9 @@
   config = lib.mkIf config.devTools.enable {
     environment.systemPackages = with pkgs; [
       opencode #AI coding agent built for the terminal
+      # claude-code #Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster
+      # claude-monitor #Real-time Claude Code usage monitor (not yet in nixpkgs-25.05, only unstable)
+      # claude-code-router #Tool to route Claude Code requests to different models and customize any request (not yet in nixpkgs-25.05, only unstable)
       git
       # gitlogue
       devenv
@@ -60,7 +63,7 @@
         if [ ! -d "/var/lib/postgresql/" ]; then
           echo "creating PostgreSQL data directory..."
           sudo mkdir -m 750 -p /var/lib/postgresql/
-          chown -R admin:staff /var/lib/postgresql/
+          chown -R ${user}:staff /var/lib/postgresql/
         fi
       '';
     };
@@ -69,7 +72,7 @@
     enable = true;
     package = pkgs.postgresql_16;
     initdbArgs = [
-      "-U admin"            # Initialize with 'admin' user
+      "-U ${user}"            # Initialize with host user
       "--pgdata=/var/lib/postgresql/16"
       "--auth=trust"
       "--no-locale"
@@ -78,7 +81,7 @@
   };
 
     launchd.user.agents.postgresql.serviceConfig = {
-      UserName = "admin";     # Run service as 'admin' user
+      UserName = user;     # Run service as host user
       GroupName = "staff";
       StandardErrorPath = "/tmp/postgres.error.log";
       StandardOutPath = "/tmp/postgres.log";

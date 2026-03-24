@@ -48,6 +48,9 @@
       ticker #Terminal stock ticker with live updates and position tracking
       tldr #Simplified and community-driven man pages
       # pngoptimizer #PNG optimizer and converter
+      eza #Modern, maintained replacement for ls
+      # percollate #tool to turn web pages into readable PDF, EPUB, HTML, or Markdown docs (depends on chromium, not available on aarch64-darwin)
+      # lazyssh #Terminal-based SSH manager (not yet in nixpkgs-25.05, only unstable)
     ];
 
 
