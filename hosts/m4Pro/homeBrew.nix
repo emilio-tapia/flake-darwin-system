@@ -63,25 +63,25 @@
         # "postgresql@16"
         # "fzf" #installed in home-manager
         "poppler"
-        # "llmfit"
+        "llmfit"
         "gromgit/brewtils/taproom"
         "domcyrus/rustnet/rustnet"
-        # "gitv"
+        # "gitversion"
         "mikalv/mcdu/mcdu"
         # "chojs23/tap/ec" # native 3-way git conflict resolver.
-        # "arimxyer/tap/models" #TUI for browsing AI models and coding agents
-        # "whosthere" #local area network (LAN) discovery tool with a modern TUI interface.
-        # "mole" #Deep clean and optimize your Mac.
+        "models" #TUI for browsing AI models and coding agents
+        "whosthere" #local area network (LAN) discovery tool with a modern TUI interface.
+        "mole" #Deep clean and optimize your Mac.
         # "marcus/tap/sidecar" #TUI dashboard for AI coding agents.
         # "jordond/tap/jolt" #A beautiful TUI battery and energy monitor for your terminal.
-        # "snitch" #A TUI for inspecting network connections, like netstat for humans.
+        "snitch" #A TUI for inspecting network connections, like netstat for humans.
         # "arimxyer/tap/aic" #Fetch the latest changelogs for popular AI coding assistants.
         # "andrewmd5/tap/dawn" #distraction-free writing environment. draft anything, write now.
-        # "bookokrat" # terminal EPUB / PDF ebook reader.
-        # "Tantalor93/dnspyre" #CLI tool for a high QPS DNS benchmark.
+        "bookokrat" # terminal EPUB / PDF ebook reader.
+        "dnspyre" #CLI tool for a high QPS DNS benchmark.
         # "torra" #Maniacsan/homebrew-torrra/torrra
-        # "cronboard" #A terminal tool for managing cron jobs locally and on servers.
-        # "unhappychoice/tap/gittype" #A terminal code-typing game that turns your source code into typing challenges.
+        "cronboard" #A terminal tool for managing cron jobs locally and on servers.
+        "gittype" #A terminal code-typing game that turns your source code into typing challenges.
         # "miklosn/tap/cmdperf" #Benchmark and compare shell commands interactively.
         # "Fguedes90/tap/lazycelery" #A TUI for monitoring and managing Celery workers and tasks.
         # "conikeec/tap/mcp-probe" #Advanced MCP Protocol Debugger & Interactive TUI.
