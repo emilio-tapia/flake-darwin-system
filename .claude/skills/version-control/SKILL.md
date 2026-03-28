@@ -1,10 +1,10 @@
 ---
 name: version-control
-description: Git expert — commits, grouping strategy, branches, tags, releases, history, diffs, conflict resolution. Handles all git situations and advises on when/how to commit.
+description: Git expert — commits, grouping strategy, branches, tags, releases, changelog, history, diffs, conflict resolution. Handles all git situations and advises on when/how to commit.
 allowed-tools: Bash(git *), Bash(gh *), Bash(ls *), Read, Glob, Grep, Edit, Write
 argument-hint:
   [
-    action: commit | status | log | diff | branch | tag | release | sync | cherry-pick | resolve | help,
+    action: commit | changelog | status | log | diff | branch | tag | release | sync | cherry-pick | resolve | help,
   ]
 ---
 
@@ -141,6 +141,13 @@ git log --oneline -N   # show all new commits
 git status              # verify clean tree
 ```
 
+### Changelog update:
+After committing, **always update `CHANGELOG.md`** if it exists:
+1. Read the current `CHANGELOG.md`
+2. Add new entries under `## [Unreleased]` matching the commits just created
+3. Classify entries into Keep a Changelog categories (see Section 8)
+4. Stage and commit the changelog update as `(docs): update changelog`
+
 ---
 
 ## 5. Edge Cases
@@ -198,7 +205,116 @@ Show conflicts, propose resolution, apply only with user confirmation.
 
 ---
 
-## 7. Safety Rules
+## 7. Changelog Management
+
+### File structure:
+
+Two locations — always keep both in sync:
+
+1. **`CHANGELOG.md`** (raíz) — archivo acumulativo con todo el historial, formato Keep a Changelog
+2. **`docs/changelog/changelog_DDMMYYYY.md`** — entrada detallada por fecha, formato estructurado
+
+### `CHANGELOG.md` (raíz) — formato Keep a Changelog:
+
+```markdown
+# Changelog
+
+## [Unreleased]
+
+### Added
+- Descripción del cambio
+
+### Changed
+- Descripción del cambio
+
+### Fixed
+- Descripción del cambio
+```
+
+Categories mapping:
+
+| Changelog Category | Commit Types |
+|-------------------|-------------|
+| **Added** | `feat`, `package` (new), `add` |
+| **Changed** | `refactor`, `chore` (config changes), `update` |
+| **Fixed** | `fix` |
+| **Removed** | packages/features removed |
+
+### `docs/changelog/changelog_DDMMYYYY.md` — formato estructurado:
+
+Cada archivo es una entrada detallada del día. Formato (ver ejemplo en `examples/v1.0.0.md`):
+
+```markdown
+# Changelog — DD/MM/YYYY
+
+**Fecha:** YYYY-MM-DD
+**Tipo:** feat | fix | refactor | chore | package | docs
+**Alcance:** flake | darwin | home-manager | hosts | homebrew | devenv | general
+
+## Descripción
+
+Párrafo breve explicando el propósito general de los cambios del día.
+
+## Cambios realizados
+
+1. Se hizo X
+2. Se configuró Y
+3. Se corrigió Z
+
+## Archivos modificados
+
+- `path/to/file.nix` — qué se cambió y por qué
+- `path/to/other.nix` — descripción breve
+
+## Impacto para el usuario
+
+Qué cambia desde la perspectiva del usuario final del sistema.
+```
+
+### Naming convention:
+- Archivo: `vX.Y.Z.md` (e.g., `v0.5.0.md`, `v1.0.0.md`)
+- Título: `# Changelog — vX.Y.Z`
+- Un archivo por versión, cada uno documenta los cambios de esa release
+- Si hay múltiples tipos en una versión, usar el tipo predominante en la metadata
+- Si hay múltiples alcances, usar el más relevante o `general`
+
+### Versioning with `VERSION` file:
+- `VERSION` file in repo root contains the current semver (e.g., `1.1.0`)
+- On changelog creation, **bump the version** in `VERSION`:
+  - **PATCH** (1.0.0 → 1.0.1): typo fixes, minor config corrections
+  - **MINOR** (1.0.0 → 1.1.0): new packages, config changes, refactors
+  - **MAJOR** (1.0.0 → 2.0.0): breaking changes (input upgrades, architecture changes)
+- The new version determines the changelog filename (`vX.Y.Z.md`)
+
+### When user says "commit and changelog" or just "changelog":
+
+**For `changelog` alone:**
+1. Read `VERSION` — get current version
+2. `git log --oneline` — commits since last changelog
+3. Determine version bump (patch/minor/major)
+4. Update `VERSION` with new version
+5. Update `CHANGELOG.md` (raíz) — move [Unreleased] entries to new version section
+6. Create `docs/changelog/vX.Y.Z.md` — entrada detallada
+7. Ask user if they want to commit
+
+**For `commit and changelog`:**
+1. Run full commit workflow (Section 3-4)
+2. Read `VERSION`, determine bump, update it
+3. Update `CHANGELOG.md` with new version section
+4. Create `docs/changelog/vX.Y.Z.md` with detailed entry
+5. Commit all changelog + VERSION files as `(docs): update changelog vX.Y.Z`
+
+### Rules:
+- Entries should be **human-readable summaries**, not raw commit messages
+- Cambios numerados en `docs/changelog/` deben ser descriptivos (empezar con "Se...")
+- Write in **español**
+- Include context when non-obvious (e.g., "deshabilitado por incompatibilidad con Intel")
+- **Always update both files** — `CHANGELOG.md` y `docs/changelog/`
+- Archivos modificados deben incluir una breve justificación, no solo el path
+
+---
+
+## 8. Safety Rules
 
 **NEVER execute without user confirmation:**
 - `git push` (any variant)
