@@ -7,7 +7,6 @@
 
   config = lib.mkIf config.devTools.enable {
     environment.systemPackages = with pkgs; [
-      opencode #AI coding agent built for the terminal
       # claude-code #Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster
       # claude-monitor #Real-time Claude Code usage monitor (not yet in nixpkgs-25.05, only unstable)
       # claude-code-router #Tool to route Claude Code requests to different models and customize any request (not yet in nixpkgs-25.05, only unstable)

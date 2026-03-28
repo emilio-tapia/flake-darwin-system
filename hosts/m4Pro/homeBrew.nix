@@ -47,7 +47,7 @@
         "docker-desktop"
         "losslesscut"
         "handbrake-app"
-        
+        "wezterm"
       ];
 
       caskArgs = {
@@ -85,6 +85,7 @@
         # "miklosn/tap/cmdperf" #Benchmark and compare shell commands interactively.
         # "Fguedes90/tap/lazycelery" #A TUI for monitoring and managing Celery workers and tasks.
         # "conikeec/tap/mcp-probe" #Advanced MCP Protocol Debugger & Interactive TUI.
+        "opencode" #AI coding agent built for the terminal
       ];
 
       masApps = {
