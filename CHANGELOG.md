@@ -6,6 +6,18 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-05-14
+
+### Added
+- Módulo `customPackages` para empaquetar herramientas Python/Go/npm desde GitHub (helper `mkPythonAppFromGitHub` + plantillas para `buildGoModule` / `buildNpmPackage`), habilitado en m4Pro y macbookPro
+
+### Changed
+- pnpm movido de nix packages a Homebrew brew en ambos hosts (para acceder a la serie 11.x, no disponible en nixpkgs-25.05)
+- `homebrew.onActivation.autoUpdate` activado en m4Pro y macbookPro
+
+### Removed
+- vscode deshabilitado en `darwinModules/desktopApps.nix` (en desuso)
+
 ## [1.1.1] — 2026-03-28
 
 ### Added
