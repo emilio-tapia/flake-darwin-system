@@ -56,7 +56,7 @@
       brews = [
         "jenv"
         "mas"
-        # "pnpm"
+        "pnpm"
         "tree"
         # "postgresql@16"
         # "fzf" #installed in home-manager

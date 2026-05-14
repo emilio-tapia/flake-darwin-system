@@ -22,7 +22,7 @@
       # NODE
       fnm
       nodejs
-      pnpm
+      # pnpm esta en homebrew
 
       # PYTHON
       python313
