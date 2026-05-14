@@ -17,5 +17,6 @@
   fontPackage.enable = true;
   terminalTools.enable = true;
   cloudTools.enable = true;
+  customPackages.enable = true;
   desktopApps.enable = true;
 }

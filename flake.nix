@@ -30,6 +30,7 @@
       ./darwinModules/development/devTools.nix
       ./darwinModules/development/cloudTools.nix
       ./darwinModules/development/terminalTools.nix
+      ./darwinModules/development/customPackages.nix
     ];
 
     # Function to create Home Manager configurations
