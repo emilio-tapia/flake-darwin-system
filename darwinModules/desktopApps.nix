@@ -20,7 +20,7 @@
       # keepass
       # responsively-app
       xld
-      vscode
+      # vscode   # ya no lo uso mucho
       teams
       archi
       # android-studio
