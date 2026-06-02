@@ -97,7 +97,15 @@
         (lib.mkBefore ''
           if [[ $- == *i* ]] && [[ -z "$TMUX" ]] && \
              { [[ -n "$ALACRITTY_WINDOW_ID" ]] || [[ "$TERM_PROGRAM" == "WezTerm" ]]; }; then
-            exec ${pkgs.tmux}/bin/tmux new-session
+            # Reuse the first detached (unattached) session so windows don't pile
+            # up as orphans; create a fresh session only when none are free.
+            session=$(${pkgs.tmux}/bin/tmux list-sessions -F '#{session_attached} #{session_name}' 2>/dev/null \
+                      | ${pkgs.gawk}/bin/awk '$1 == "0" { print $2; exit }')
+            if [[ -n "$session" ]]; then
+              exec ${pkgs.tmux}/bin/tmux attach-session -t "$session"
+            else
+              exec ${pkgs.tmux}/bin/tmux new-session
+            fi
           fi
         '')
         ''

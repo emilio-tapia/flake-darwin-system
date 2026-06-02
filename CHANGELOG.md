@@ -6,6 +6,11 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [1.3.1] — 2026-06-02
+
+### Fixed
+- El auto-arranque de tmux creaba una sesión nueva por cada ventana de Alacritty/WezTerm (`exec tmux new-session`), que quedaban como sesiones detached huérfanas y se acumulaban sin límite. Ahora reutiliza la primera sesión libre (detached) y solo crea una nueva cuando todas están en uso, en ambos hosts
+
 ## [1.3.0] — 2026-06-02
 
 ### Added
