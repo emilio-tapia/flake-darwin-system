@@ -6,6 +6,21 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-06-02
+
+### Added
+- `programs.wezterm` declarativo en Nix en m4Pro y macbookPro, con fuente (`MesloLGS NF`) y paleta oceánica espejo de la configuración de Alacritty
+- Auto-arranque de tmux al abrir Alacritty o WezTerm, vía `programs.zsh.initContent` (detección por `ALACRITTY_WINDOW_ID`/`TERM_PROGRAM`, sesión nueva e independiente por ventana), en ambos hosts
+- Override de true color de tmux para WezTerm (`xterm-wezterm:RGB`/`:Tc`) en ambos hosts
+
+### Changed
+- WezTerm migrado de cask de Homebrew a Nix (`programs.wezterm`) en m4Pro
+- `programs.tmux.terminal` corregido a `tmux-256color` en ambos hosts, eliminando la contradicción con el `default-terminal` del `extraConfig`
+- En macbookPro el shell de Alacritty vuelve a ser zsh plano; tmux ahora se inicia desde el `.zshrc` en lugar del hack `zsh -l -c "tmux new -A -s main"`
+
+### Removed
+- `tmux` duplicado en `home.packages` de emilio (ya lo provee `programs.tmux`)
+
 ## [1.2.0] — 2026-05-14
 
 ### Added
