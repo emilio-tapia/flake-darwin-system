@@ -1,0 +1,6 @@
+# Nix build artifacts (created by `nix build` / `darwin-rebuild build`)
+result
+result-*
+
+# Local Claude Code settings (machine-specific)
+.claude/settings.local.json
