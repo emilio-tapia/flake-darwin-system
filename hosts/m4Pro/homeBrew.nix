@@ -47,7 +47,7 @@
         "docker-desktop"
         "losslesscut"
         "handbrake-app"
-        "wezterm"
+        # "wezterm" # installed by nix (programs.wezterm)
       ];
 
       caskArgs = {

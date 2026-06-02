@@ -96,7 +96,17 @@
       initContent = let
         fzfCmd = "${pkgs.fzf}/bin/fzf";
         fdCmd = "${pkgs.fd}/bin/fd";
-      in ''
+      in lib.mkMerge [
+        # Auto-start tmux only in Alacritty / WezTerm, before the rest of init.
+        # Skip if not interactive or already inside tmux (avoids infinite re-exec,
+        # since ALACRITTY_*/TERM_PROGRAM stay set in the tmux child shell).
+        (lib.mkBefore ''
+          if [[ $- == *i* ]] && [[ -z "$TMUX" ]] && \
+             { [[ -n "$ALACRITTY_WINDOW_ID" ]] || [[ "$TERM_PROGRAM" == "WezTerm" ]]; }; then
+            exec ${pkgs.tmux}/bin/tmux new-session
+          fi
+        '')
+        ''
         # Widget creation must come first
         zle -N insert-unambiguous-or-complete
         zle -N menu-search
@@ -166,7 +176,8 @@
           bindkey "∫" backward-kill-word  # Option-Backspace
           bindkey "ç" kill-word           # Option-Delete
         fi
-      '';
+        ''
+      ];
 
     };
 
@@ -399,35 +410,92 @@
           hide_when_typing = true;
         };
 
-        # terminal.shell = {
-        #   args = ["new-session"  "-A"  "-D" "-s" "main"];
-        #   program = "${pkgs.tmux}/bin/tmux";
-        # }; # Alacritty will execute tmux directly as its "shell" / This Caused Issues Non-standard approach: Bypasses normal shell initialization (.zshrc, etc.) / Nested sessions: Might create tmux-in-tmux if you later run tmux commands
-
+        # tmux auto-start is handled in zsh initContent (see programs.zsh),
+        # so Alacritty just launches a normal login shell.
         terminal.shell = {
           program = "${pkgs.zsh}/bin/zsh";
-          args = [
-            "-l"
-            "-c"
-            "tmux new -A -s main" # Proper session management
-          ];
         };
       };
     };
 
+    wezterm = {
+      enable = true;
+      # WezTerm is configured in Lua; this mirrors the Alacritty setup above.
+      extraConfig = ''
+        -- `local wezterm = require 'wezterm'` is injected by the Home Manager module.
+        local config = wezterm.config_builder()
+
+        -- Font
+        config.font = wezterm.font_with_fallback {
+          'MesloLGS NF',
+          'FiraCode Nerd Font Mono',
+        }
+        config.font_size = 13.0
+
+        -- Window
+        config.window_background_opacity = 0.95
+        config.window_padding = { left = 5, right = 5, top = 5, bottom = 5 }
+        config.window_decorations = 'TITLE | RESIZE'
+        config.hide_tab_bar_if_only_one_tab = true
+        config.scrollback_lines = 100000
+
+        -- Cursor
+        config.default_cursor_style = 'BlinkingBlock'
+        config.cursor_blink_rate = 750
+        config.hide_mouse_cursor_when_typing = true
+
+        -- Shell
+        config.default_prog = { '${pkgs.zsh}/bin/zsh' }
+
+        -- Ocean color palette (matches Alacritty)
+        config.colors = {
+          foreground = '#D1E5F9',
+          background = '#0E1621',
+          cursor_bg = '#025CB1',
+          cursor_fg = '#0a1a2f',
+          cursor_border = '#025CB1',
+          selection_bg = '#4C86A3',
+          selection_fg = '#0a1a2f',
+          ansi = {
+            '#002635', -- black
+            '#ff5e5e', -- red
+            '#138A43', -- green
+            '#ffe96c', -- yellow
+            '#0370D6', -- blue
+            '#d18aff', -- magenta
+            '#0B9CB9', -- cyan
+            '#c7d0d7', -- white
+          },
+          brights = {
+            '#003b5f', -- bright black
+            '#ff8484', -- bright red
+            '#84ffc2', -- bright green
+            '#fff084', -- bright yellow
+            '#84d8ff', -- bright blue
+            '#e8a5ff', -- bright magenta
+            '#84fff0', -- bright cyan
+            '#e0e8f0', -- bright white
+          },
+        }
+
+        return config
+      '';
+    };
+
     tmux = {
       enable = true;
-      terminal = "screen-256color";
+      terminal = "tmux-256color";
       historyLimit = 5000;
       keyMode = "vi";
       # shortcut = "b";  # Use as prefix Ctrl-b
       baseIndex = 1;    # Start window numbering at 1
       mouse = true;
       extraConfig = ''
-        # Enable true color support
-        set -g default-terminal "tmux-256color"
+        # Enable true color support (default-terminal set via the `terminal` option above)
         set -ga terminal-overrides ",alacritty:RGB"
         set -ga terminal-overrides ",alacritty:Tc"
+        set -ga terminal-overrides ",xterm-wezterm:RGB"
+        set -ga terminal-overrides ",xterm-wezterm:Tc"
 
         # Split panes using | and -
         bind * split-window -h -c "#{pane_current_path}"
