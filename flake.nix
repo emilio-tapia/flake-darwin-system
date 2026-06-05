@@ -25,6 +25,23 @@
   outputs = { self, nixpkgs, nix-darwin, home-manager, determinate, nix-homebrew, mac-app-util, devenv, flake-utils, gitignore, ... }@inputs:
   let
 
+    # tmux 3.4 introduced an OSC 10/11 colour-query feature that, on tmux 3.5a,
+    # leaks the terminal's reply into the pane at client attach — it shows up as
+    # "10;rgb:.../11;rgb:..." before the prompt. This is an open upstream bug
+    # (tmux/tmux#4634) with no fix and no option to disable the feature, so we
+    # pin tmux to the last 3.3 release, which predates the feature entirely.
+    tmuxPin = final: prev: {
+      tmux = prev.tmux.overrideAttrs (_: rec {
+        version = "3.3a";
+        src = prev.fetchFromGitHub {
+          owner = "tmux";
+          repo = "tmux";
+          rev = version;
+          sha256 = "sha256-SygHxTe7N4y7SdzKixPFQvqRRL57Fm8zWYHfTpW+yVY=";
+        };
+      });
+    };
+
     # Development tools modules
     devModules = [
       ./darwinModules/development/devTools.nix
@@ -39,6 +56,7 @@
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          overlays = [ tmuxPin ];
         };
         modules = [
           ./home_manager/${user}_${hostName}.nix
@@ -56,6 +74,7 @@
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          overlays = [ tmuxPin ];
         };
         specialArgs = {
           inherit self inputs;

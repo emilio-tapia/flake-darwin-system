@@ -12,6 +12,11 @@
         autoUpdate = true;
         cleanup = "zap";
         upgrade = true;
+        # Homebrew 5.1+ requires confirmation before running `brew bundle
+        # --cleanup`; without this it aborts asking for --force/--force-cleanup/
+        # $HOMEBREW_ASK. --force-cleanup performs the zap non-interactively
+        # (unlike --force, which also implies --overwrite).
+        extraFlags = [ "--force-cleanup" ];
       };
 
       # brewPrefix = "/opt/homebrew/bin";

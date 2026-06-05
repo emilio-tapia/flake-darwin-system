@@ -6,6 +6,15 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-06-04
+
+### Fixed
+- tmux 3.4+ filtraba la respuesta a su consulta de color del terminal (OSC 10/11) dentro del panel al hacer attach, imprimiendo `10;rgb:.../11;rgb:...` antes del prompt en cada terminal nueva. Es un bug abierto de tmux sin fix ni opción para desactivar el feature ([tmux/tmux#4634](https://github.com/tmux/tmux/issues/4634)); se fija tmux a la última versión 3.3 (3.3a), anterior al feature, vía un overlay `tmuxPin` en `flake.nix` que aplica a darwin y home-manager en ambos hosts
+- `darwin-rebuild switch` fallaba en el paso de Homebrew: Homebrew 5.1+ exige confirmación antes de `brew bundle --cleanup` y abortaba pidiendo `--force`/`--force-cleanup`/`$HOMEBREW_ASK`. Se añade `homebrew.onActivation.extraFlags = [ "--force-cleanup" ]` en ambos hosts para hacer el zap de forma no interactiva
+
+### Changed
+- `programs.tmux.mouse` desactivado (`false`) en ambos hosts: el mouse mode de tmux secuestraba la selección hacia su propio buffer y rompía Cmd+C. Ahora la selección con mouse y Cmd+C funcionan de forma nativa; el scroll usa el scrollback del terminal y el copy-mode de tmux queda por teclado
+
 ## [1.3.1] — 2026-06-02
 
 ### Fixed

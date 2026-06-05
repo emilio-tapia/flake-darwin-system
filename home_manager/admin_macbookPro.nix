@@ -497,7 +497,10 @@
       keyMode = "vi";
       # shortcut = "b";  # Use as prefix Ctrl-b
       baseIndex = 1;    # Start window numbering at 1
-      mouse = true;
+      # Mouse off so the terminal's native selection + Cmd+C work as usual
+      # (tmux mouse mode hijacks selection into its own copy buffer). Scroll
+      # uses the terminal's scrollback; copy-mode is keyboard-driven.
+      mouse = false;
       extraConfig = ''
         # Enable true color support (default-terminal set via the `terminal` option above)
         set -ga terminal-overrides ",alacritty:RGB"
